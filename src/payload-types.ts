@@ -313,7 +313,7 @@ export interface Project {
   area?: string | null;
   year?: number | null;
   category?: string | null;
-  website?: string | null;
+  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   status?: string | null;
   budget?: string | null;
   featured_archia?: boolean | null;
@@ -350,7 +350,7 @@ export interface Publication {
   slug: string;
   date?: string | null;
   latest?: boolean | null;
-  website?: string | null;
+  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   /**
    * Article content / HTML markup
    */
