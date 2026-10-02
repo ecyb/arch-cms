@@ -16,11 +16,15 @@ import { ContactInfoItems } from './collections/ContactInfoItems'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const dbUri =
+const rawDbUri =
   process.env.DATABASE_URI ||
   process.env.DATABASE_URL ||
   process.env.POSTGRES_URL ||
-  'postgresql://postgres:ZvklpXUioEItvGdWTQGPGzASFtrLganU@sakura.proxy.rlwy.net:45248/railway'
+  ''
+
+const dbUri = rawDbUri.startsWith('postgres')
+  ? rawDbUri
+  : 'postgresql://postgres:ZvklpXUioEItvGdWTQGPGzASFtrLganU@sakura.proxy.rlwy.net:45248/railway'
 
 export default buildConfig({
   admin: {
