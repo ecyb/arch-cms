@@ -72,6 +72,8 @@ export interface Config {
     pages: Page;
     projects: Project;
     publications: Publication;
+    members: Member;
+    contact_info_items: ContactInfoItem;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +86,8 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     publications: PublicationsSelect<false> | PublicationsSelect<true>;
+    members: MembersSelect<false> | MembersSelect<true>;
+    contact_info_items: ContactInfoItemsSelect<false> | ContactInfoItemsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -303,17 +307,36 @@ export interface Project {
   id: number;
   name: string;
   slug: string;
+  description?: string | null;
+  client?: string | null;
+  location?: string | null;
+  area?: string | null;
   year?: number | null;
   category?: string | null;
-  location?: string | null;
-  description?: string | null;
-  directusId?: number | null;
+  website?: string | null;
+  status?: string | null;
+  budget?: string | null;
+  featured_archia?: boolean | null;
+  featured_mp?: boolean | null;
+  sort?: number | null;
   gallery?:
     | {
         image: number | Media;
         id?: string | null;
       }[]
     | null;
+  seo?: {
+    /**
+     * Ideal length 45-60 characters recommended.
+     */
+    page_title?: string | null;
+    /**
+     * Ideal length 130-160 characters recommended.
+     */
+    meta_description?: string | null;
+    social_image?: (number | null) | Media;
+  };
+  directusId?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -326,12 +349,56 @@ export interface Publication {
   name: string;
   slug: string;
   date?: string | null;
+  latest?: boolean | null;
+  website?: string | null;
   /**
-   * Article body content or HTML
+   * Article content / HTML markup
    */
   body?: string | null;
   coverImage?: (number | null) | Media;
+  seo?: {
+    /**
+     * Ideal length 45-60 characters recommended.
+     */
+    page_title?: string | null;
+    /**
+     * Ideal length 130-160 characters recommended.
+     */
+    meta_description?: string | null;
+    social_image?: (number | null) | Media;
+  };
   directusId?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "members".
+ */
+export interface Member {
+  id: number;
+  name: string;
+  role?: string | null;
+  bio?: string | null;
+  photo?: (number | null) | Media;
+  sort?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_info_items".
+ */
+export interface ContactInfoItem {
+  id: number;
+  contact_item_1_label?: string | null;
+  contact_item_1_content?: string | null;
+  contact_item_2_label?: string | null;
+  contact_item_2_content?: string | null;
+  contact_item_3_label?: string | null;
+  contact_item_3_content?: string | null;
+  contact_item_4_label?: string | null;
+  contact_item_4_content?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -378,6 +445,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'publications';
         value: number | Publication;
+      } | null)
+    | ({
+        relationTo: 'members';
+        value: number | Member;
+      } | null)
+    | ({
+        relationTo: 'contact_info_items';
+        value: number | ContactInfoItem;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -593,17 +668,32 @@ export interface PagesSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  description?: T;
+  client?: T;
+  location?: T;
+  area?: T;
   year?: T;
   category?: T;
-  location?: T;
-  description?: T;
-  directusId?: T;
+  website?: T;
+  status?: T;
+  budget?: T;
+  featured_archia?: T;
+  featured_mp?: T;
+  sort?: T;
   gallery?:
     | T
     | {
         image?: T;
         id?: T;
       };
+  seo?:
+    | T
+    | {
+        page_title?: T;
+        meta_description?: T;
+        social_image?: T;
+      };
+  directusId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -615,9 +705,47 @@ export interface PublicationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   date?: T;
+  latest?: T;
+  website?: T;
   body?: T;
   coverImage?: T;
+  seo?:
+    | T
+    | {
+        page_title?: T;
+        meta_description?: T;
+        social_image?: T;
+      };
   directusId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "members_select".
+ */
+export interface MembersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  bio?: T;
+  photo?: T;
+  sort?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_info_items_select".
+ */
+export interface ContactInfoItemsSelect<T extends boolean = true> {
+  contact_item_1_label?: T;
+  contact_item_1_content?: T;
+  contact_item_2_label?: T;
+  contact_item_2_content?: T;
+  contact_item_3_label?: T;
+  contact_item_3_content?: T;
+  contact_item_4_label?: T;
+  contact_item_4_content?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -4,44 +4,107 @@ export const Publications: CollectionConfig = {
   slug: 'publications',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'slug', 'date'],
+    defaultColumns: ['name', 'slug', 'date', 'latest'],
   },
   access: {
     read: () => true,
   },
   fields: [
     {
-      name: 'name',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'date',
-      type: 'date',
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'body',
-      type: 'textarea',
-      admin: {
-        description: 'Article body content or HTML',
-      },
-    },
-    {
-      name: 'coverImage',
-      type: 'upload',
-      relationTo: 'media',
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'name',
+              type: 'text',
+              required: true,
+              label: 'Name',
+            },
+            {
+              name: 'slug',
+              type: 'text',
+              required: true,
+              unique: true,
+              label: 'Slug',
+              admin: {
+                position: 'sidebar',
+              },
+            },
+            {
+              name: 'date',
+              type: 'date',
+              label: 'Date',
+              admin: {
+                position: 'sidebar',
+              },
+            },
+            {
+              name: 'latest',
+              type: 'checkbox',
+              label: 'Latest Article',
+              defaultValue: false,
+              admin: {
+                position: 'sidebar',
+              },
+            },
+            {
+              name: 'website',
+              type: 'text',
+              label: 'Website / External Link',
+            },
+            {
+              name: 'body',
+              type: 'textarea',
+              label: 'Body',
+              admin: {
+                description: 'Article content / HTML markup',
+              },
+            },
+            {
+              name: 'coverImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Cover Image',
+            },
+          ],
+        },
+        {
+          label: 'SEO',
+          fields: [
+            {
+              name: 'seo',
+              type: 'group',
+              label: 'SEO Settings',
+              fields: [
+                {
+                  name: 'page_title',
+                  type: 'text',
+                  label: 'Page Title',
+                  admin: {
+                    description: 'Ideal length 45-60 characters recommended.',
+                  },
+                },
+                {
+                  name: 'meta_description',
+                  type: 'textarea',
+                  label: 'Meta Description',
+                  admin: {
+                    description: 'Ideal length 130-160 characters recommended.',
+                  },
+                },
+                {
+                  name: 'social_image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Social Image Preview',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       name: 'directusId',

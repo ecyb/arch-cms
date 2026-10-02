@@ -10,6 +10,8 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Projects } from './collections/Projects'
 import { Publications } from './collections/Publications'
+import { Members } from './collections/Members'
+import { ContactInfoItems } from './collections/ContactInfoItems'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,7 +29,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Pages, Projects, Publications],
+  collections: [Users, Media, Pages, Projects, Publications, Members, ContactInfoItems],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'archia-payload-secret-key-987654321',
   typescript: {
