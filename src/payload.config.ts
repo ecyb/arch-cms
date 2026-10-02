@@ -35,7 +35,6 @@ export default buildConfig({
   },
   collections: [Users, Media, Pages, Projects, Publications, Members, ContactInfoItems],
   cors: ['*'],
-  csrf: ['http://localhost:3000', 'https://archia.com'],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'archia-payload-secret-key-987654321',
   typescript: {
