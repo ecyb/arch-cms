@@ -51,8 +51,16 @@ export const Publications: CollectionConfig = {
             },
             {
               name: 'website',
-              type: 'text',
-              label: 'Website / External Link',
+              type: 'select',
+              label: 'Website',
+              defaultValue: 'Archia',
+              options: [
+                { label: 'None', value: 'None' },
+                { label: 'Archia', value: 'Archia' },
+                { label: 'Magnum Projects', value: 'Magnum Projects' },
+                { label: 'DF', value: 'DF' },
+                { label: 'All', value: 'All' },
+              ],
             },
             {
               name: 'body',

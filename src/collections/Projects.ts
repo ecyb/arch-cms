@@ -82,8 +82,16 @@ export const Projects: CollectionConfig = {
               fields: [
                 {
                   name: 'website',
-                  type: 'text',
+                  type: 'select',
                   label: 'Website',
+                  defaultValue: 'All',
+                  options: [
+                    { label: 'None', value: 'None' },
+                    { label: 'Archia', value: 'Archia' },
+                    { label: 'Magnum Projects', value: 'Magnum Projects' },
+                    { label: 'DF', value: 'DF' },
+                    { label: 'All', value: 'All' },
+                  ],
                   admin: { width: '33%' },
                 },
                 {
