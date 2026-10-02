@@ -190,6 +190,53 @@ export const Pages: CollectionConfig = {
           ],
         },
 
+        // 4b. About Us Section (Home Page)
+        {
+          slug: 'aboutSection',
+          imageURL: '/blocks/about-section.jpg',
+          imageAltText: 'About Us Section',
+          admin: {
+            images: {
+              thumbnail: '/blocks/about-section.jpg',
+            },
+          },
+          labels: {
+            singular: 'About Us Section',
+            plural: 'About Us Sections',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              defaultValue: 'About us',
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Lead Paragraph',
+              defaultValue:
+                'Our experienced team brings together strong design expertise with extensive project management experience across commercial and high-end residential sectors. This combined knowledge allows us to approach each project with both creative clarity and technical precision.',
+            },
+            {
+              name: 'subtext',
+              type: 'textarea',
+              label: 'Secondary Paragraph',
+              defaultValue:
+                'We work closely with a trusted network of consultants, specialists, and suppliers, drawing on a well-established supply chain to ensure the highest standards of quality at every stage. Through collaboration, coordination, and attention to detail, we deliver well-resolved spaces that meet the practical, aesthetic, and long-term requirements of each project.',
+            },
+            {
+              name: 'ctaLabel',
+              type: 'text',
+              defaultValue: 'Learn more',
+            },
+            {
+              name: 'ctaLink',
+              type: 'text',
+              defaultValue: '/contact',
+            },
+          ],
+        },
+
         // 5. Studio Disciplines & Pillars
         {
           slug: 'studioPillars',

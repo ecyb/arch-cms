@@ -222,6 +222,16 @@ export interface Page {
         blockType: 'founderProfile';
       }
     | {
+        title?: string | null;
+        description?: string | null;
+        subtext?: string | null;
+        ctaLabel?: string | null;
+        ctaLink?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'aboutSection';
+      }
+    | {
         pillars?:
           | {
               number?: string | null;
@@ -588,6 +598,17 @@ export interface PagesSelect<T extends boolean = true> {
               portrait?: T;
               portraitCaption?: T;
               bio?: T;
+              id?: T;
+              blockName?: T;
+            };
+        aboutSection?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              subtext?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
               id?: T;
               blockName?: T;
             };
