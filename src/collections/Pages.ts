@@ -73,7 +73,7 @@ export const Pages: CollectionConfig = {
           ],
         },
 
-        // 2. Featured Projects Grid / Slider
+        // 2. Featured Projects Grid / Slider (For Homepage Highlights)
         {
           slug: 'featuredProjects',
           imageURL: '/blocks/featured-projects.jpg',
@@ -84,7 +84,7 @@ export const Pages: CollectionConfig = {
             },
           },
           labels: {
-            singular: 'Featured Projects Showcase',
+            singular: 'Featured Projects Showcase (Home)',
             plural: 'Featured Projects Showcases',
           },
           fields: [
@@ -103,6 +103,41 @@ export const Pages: CollectionConfig = {
               type: 'relationship',
               relationTo: 'projects',
               hasMany: true,
+            },
+          ],
+        },
+
+        // 2b. All Projects Archive Grid (Full Portfolio Directory)
+        {
+          slug: 'projectsArchive',
+          imageURL: '/blocks/featured-projects.jpg',
+          imageAltText: 'All Projects Archive Grid',
+          admin: {
+            images: {
+              thumbnail: '/blocks/featured-projects.jpg',
+            },
+          },
+          labels: {
+            singular: 'All Projects Archive Grid (Full Directory)',
+            plural: 'All Projects Archive Grids',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              defaultValue: 'All Works',
+              admin: {
+                description: 'Headline displayed at the top of the projects directory',
+              },
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              defaultValue:
+                'An international portfolio of multidisciplinary commissions across London, Baku, Dubai, and beyond. Our work spans landmark sports infrastructure, commercial flagships, and bespoke high-end residences. Explore our complete archive of built projects, urban masterplans, and ongoing developments.',
+              admin: {
+                description: 'Portfolio overview. Automatically lists all 20 projects with interactive category filters.',
+              },
             },
           ],
         },
@@ -305,6 +340,41 @@ export const Pages: CollectionConfig = {
               type: 'relationship',
               relationTo: 'publications',
               hasMany: true,
+            },
+          ],
+        },
+
+        // 6b. All Publications Archive Grid (Full Directory)
+        {
+          slug: 'journalArchive',
+          imageURL: '/blocks/journal-feed.jpg',
+          imageAltText: 'All Publications Archive Grid',
+          admin: {
+            images: {
+              thumbnail: '/blocks/journal-feed.jpg',
+            },
+          },
+          labels: {
+            singular: 'All Publications Archive Grid (Full Directory)',
+            plural: 'All Publications Archive Grids',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              defaultValue: 'Publications',
+              admin: {
+                description: 'Headline displayed at the top of the publications directory',
+              },
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              defaultValue:
+                'Architectural essays, technical engineering breakdowns, and design philosophies curated by Archia’s London studio.',
+              admin: {
+                description: 'Editorial overview. Automatically lists all 20 publications with interactive category filters.',
+              },
             },
           ],
         },

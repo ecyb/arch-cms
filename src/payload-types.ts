@@ -203,6 +203,19 @@ export interface Page {
         blockType: 'featuredProjects';
       }
     | {
+        /**
+         * Headline displayed at the top of the projects directory
+         */
+        title?: string | null;
+        /**
+         * Portfolio overview. Automatically lists all 20 projects with interactive category filters.
+         */
+        description?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'projectsArchive';
+      }
+    | {
         title?: string | null;
         badge?: string | null;
         description?: string | null;
@@ -251,6 +264,19 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'journalFeed';
+      }
+    | {
+        /**
+         * Headline displayed at the top of the publications directory
+         */
+        title?: string | null;
+        /**
+         * Editorial overview. Automatically lists all 20 publications with interactive category filters.
+         */
+        description?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'journalArchive';
       }
     | {
         title?: string | null;
@@ -580,6 +606,14 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        projectsArchive?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
         studioIntro?:
           | T
           | {
@@ -632,6 +666,14 @@ export interface PagesSelect<T extends boolean = true> {
               tag?: T;
               title?: T;
               articles?: T;
+              id?: T;
+              blockName?: T;
+            };
+        journalArchive?:
+          | T
+          | {
+              title?: T;
+              description?: T;
               id?: T;
               blockName?: T;
             };

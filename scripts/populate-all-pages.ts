@@ -36,10 +36,10 @@ async function populateAllPages() {
       slug: '/projects',
       layout: [
         {
-          blockType: 'featuredProjects',
-          tag: '02 / Architectural Commissions',
+          blockType: 'projectsArchive',
           title: 'All Works',
-          limit: 20,
+          description:
+            'An international portfolio of multidisciplinary commissions across London, Baku, Dubai, and beyond. Our work spans landmark sports infrastructure, commercial flagships, and bespoke high-end residences. Explore our complete archive of built projects, urban masterplans, and ongoing developments.',
         },
       ],
     },
@@ -89,10 +89,10 @@ async function populateAllPages() {
       slug: '/journal',
       layout: [
         {
-          blockType: 'journalFeed',
-          tag: '04 / Insights & Essays',
+          blockType: 'journalArchive',
           title: 'Publications',
-          limit: 20,
+          description:
+            'Architectural essays, technical engineering breakdowns, and design philosophies curated by Archia’s London studio.',
         },
       ],
     },
