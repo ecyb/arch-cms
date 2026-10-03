@@ -279,7 +279,7 @@ export interface Page {
         blockType: 'contactLocations';
       }
     | {
-        image: number | Media;
+        image?: (number | null) | Media;
         caption?: string | null;
         id?: string | null;
         blockName?: string | null;
