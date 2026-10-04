@@ -33,39 +33,30 @@ export const Publications: CollectionConfig = {
               required: true,
               unique: true,
               label: 'Slug',
-              admin: {
-                position: 'sidebar',
-              },
+            },
+            {
+              name: 'website',
+              type: 'select',
+              label: 'Website Destination',
+              defaultValue: 'Archia',
+              options: [
+                { label: 'None', value: 'None' },
+                { label: 'Archia', value: 'Archia' },
+                { label: 'Magnum Projects', value: 'Magnum Projects' },
+                { label: 'DF (Davud Farzulla)', value: 'DF' },
+                { label: 'All Websites', value: 'All' },
+              ],
             },
             {
               name: 'date',
               type: 'date',
               label: 'Date',
-              admin: {
-                position: 'sidebar',
-              },
             },
             {
               name: 'latest',
               type: 'checkbox',
               label: 'Latest Article',
               defaultValue: false,
-              admin: {
-                position: 'sidebar',
-              },
-            },
-            {
-              name: 'website',
-              type: 'select',
-              label: 'Website',
-              defaultValue: 'Archia',
-              options: [
-                { label: 'None', value: 'None' },
-                { label: 'Archia', value: 'Archia' },
-                { label: 'Magnum Projects', value: 'Magnum Projects' },
-                { label: 'DF', value: 'DF' },
-                { label: 'All', value: 'All' },
-              ],
             },
             {
               name: 'body',

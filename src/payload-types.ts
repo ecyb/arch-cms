@@ -306,13 +306,13 @@ export interface Project {
   id: number;
   name: string;
   slug: string;
+  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   description?: string | null;
   client?: string | null;
   location?: string | null;
   area?: string | null;
   year?: number | null;
   category?: string | null;
-  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   status?: string | null;
   budget?: string | null;
   featured_archia?: boolean | null;
@@ -366,9 +366,9 @@ export interface Publication {
   id: number;
   name: string;
   slug: string;
+  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   date?: string | null;
   latest?: boolean | null;
-  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   /**
    * Article content / HTML markup
    */
@@ -484,6 +484,7 @@ export interface DfProject {
   id: number;
   name: string;
   slug: string;
+  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   description?: string | null;
   client?: string | null;
   location?: string | null;
@@ -515,6 +516,7 @@ export interface DfPublication {
   id: number;
   name: string;
   slug: string;
+  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   date?: string | null;
   latest?: boolean | null;
   subtitle?: string | null;
@@ -878,13 +880,13 @@ export interface PagesSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  website?: T;
   description?: T;
   client?: T;
   location?: T;
   area?: T;
   year?: T;
   category?: T;
-  website?: T;
   status?: T;
   budget?: T;
   featured_archia?: T;
@@ -914,9 +916,9 @@ export interface ProjectsSelect<T extends boolean = true> {
 export interface PublicationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  website?: T;
   date?: T;
   latest?: T;
-  website?: T;
   body?: T;
   coverImage?: T;
   seo?:
@@ -998,6 +1000,7 @@ export interface DfPagesSelect<T extends boolean = true> {
 export interface DfProjectsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  website?: T;
   description?: T;
   client?: T;
   location?: T;
@@ -1028,6 +1031,7 @@ export interface DfProjectsSelect<T extends boolean = true> {
 export interface DfPublicationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  website?: T;
   date?: T;
   latest?: T;
   subtitle?: T;

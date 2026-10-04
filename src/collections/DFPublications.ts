@@ -38,26 +38,6 @@ export const DFPublications: CollectionConfig = {
               required: true,
               unique: true,
               label: 'Slug',
-              admin: {
-                position: 'sidebar',
-              },
-            },
-            {
-              name: 'date',
-              type: 'date',
-              label: 'Date',
-              admin: {
-                position: 'sidebar',
-              },
-            },
-            {
-              name: 'latest',
-              type: 'checkbox',
-              label: 'Featured / Latest Article',
-              defaultValue: false,
-              admin: {
-                position: 'sidebar',
-              },
             },
             {
               name: 'website',
@@ -71,9 +51,17 @@ export const DFPublications: CollectionConfig = {
                 { label: 'DF (Davud Farzulla)', value: 'DF' },
                 { label: 'All Websites', value: 'All' },
               ],
-              admin: {
-                position: 'sidebar',
-              },
+            },
+            {
+              name: 'date',
+              type: 'date',
+              label: 'Date',
+            },
+            {
+              name: 'latest',
+              type: 'checkbox',
+              label: 'Featured / Latest Article',
+              defaultValue: false,
             },
             {
               name: 'subtitle',

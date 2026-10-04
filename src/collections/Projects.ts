@@ -33,9 +33,19 @@ export const Projects: CollectionConfig = {
               required: true,
               unique: true,
               label: 'Slug',
-              admin: {
-                position: 'sidebar',
-              },
+            },
+            {
+              name: 'website',
+              type: 'select',
+              label: 'Website Destination',
+              defaultValue: 'Archia',
+              options: [
+                { label: 'None', value: 'None' },
+                { label: 'Archia', value: 'Archia' },
+                { label: 'Magnum Projects', value: 'Magnum Projects' },
+                { label: 'DF (Davud Farzulla)', value: 'DF' },
+                { label: 'All Websites', value: 'All' },
+              ],
             },
             {
               name: 'description',
@@ -86,30 +96,16 @@ export const Projects: CollectionConfig = {
               type: 'row',
               fields: [
                 {
-                  name: 'website',
-                  type: 'select',
-                  label: 'Website',
-                  defaultValue: 'All',
-                  options: [
-                    { label: 'None', value: 'None' },
-                    { label: 'Archia', value: 'Archia' },
-                    { label: 'Magnum Projects', value: 'Magnum Projects' },
-                    { label: 'DF', value: 'DF' },
-                    { label: 'All', value: 'All' },
-                  ],
-                  admin: { width: '33%' },
-                },
-                {
                   name: 'status',
                   type: 'text',
                   label: 'Status',
-                  admin: { width: '33%' },
+                  admin: { width: '50%' },
                 },
                 {
                   name: 'budget',
                   type: 'text',
                   label: 'Budget',
-                  admin: { width: '33%' },
+                  admin: { width: '50%' },
                 },
               ],
             },

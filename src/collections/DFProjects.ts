@@ -38,9 +38,19 @@ export const DFProjects: CollectionConfig = {
               required: true,
               unique: true,
               label: 'Slug',
-              admin: {
-                position: 'sidebar',
-              },
+            },
+            {
+              name: 'website',
+              type: 'select',
+              label: 'Website Destination',
+              defaultValue: 'DF',
+              options: [
+                { label: 'None', value: 'None' },
+                { label: 'Archia', value: 'Archia' },
+                { label: 'Magnum Projects', value: 'Magnum Projects' },
+                { label: 'DF (Davud Farzulla)', value: 'DF' },
+                { label: 'All Websites', value: 'All' },
+              ],
             },
             {
               name: 'description',
@@ -82,34 +92,14 @@ export const DFProjects: CollectionConfig = {
               ],
             },
             {
-              type: 'row',
-              fields: [
-                {
-                  name: 'category',
-                  type: 'select',
-                  label: 'Category',
-                  defaultValue: 'Interior',
-                  options: [
-                    { label: 'Architecture', value: 'Architecture' },
-                    { label: 'Interior', value: 'Interior' },
-                    { label: 'Product', value: 'Product' },
-                  ],
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'website',
-                  type: 'select',
-                  label: 'Website Destination',
-                  defaultValue: 'DF',
-                  options: [
-                    { label: 'None', value: 'None' },
-                    { label: 'Archia', value: 'Archia' },
-                    { label: 'Magnum Projects', value: 'Magnum Projects' },
-                    { label: 'DF (Davud Farzulla)', value: 'DF' },
-                    { label: 'All Websites', value: 'All' },
-                  ],
-                  admin: { width: '50%' },
-                },
+              name: 'category',
+              type: 'select',
+              label: 'Category',
+              defaultValue: 'Interior',
+              options: [
+                { label: 'Architecture', value: 'Architecture' },
+                { label: 'Interior', value: 'Interior' },
+                { label: 'Product', value: 'Product' },
               ],
             },
             {
