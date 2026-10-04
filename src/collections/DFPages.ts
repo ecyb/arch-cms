@@ -9,7 +9,7 @@ export const DFPages: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'section', 'updatedAt'],
     group: 'Davud Farzulla Website',
     description: 'Manage Interior, Architecture, Info, and News sections.',
   },
@@ -32,6 +32,20 @@ export const DFPages: CollectionConfig = {
       required: true,
       unique: true,
       label: 'URL Slug',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'section',
+      type: 'select',
+      label: 'Section Category',
+      options: [
+        { label: 'Interior', value: 'Interior' },
+        { label: 'Architecture', value: 'Architecture' },
+        { label: 'Info', value: 'Info' },
+        { label: 'News', value: 'News' },
+      ],
       admin: {
         position: 'sidebar',
       },
@@ -104,7 +118,7 @@ export const DFPages: CollectionConfig = {
             {
               name: 'projects',
               type: 'relationship',
-              relationTo: 'projects',
+              relationTo: 'df-projects',
               hasMany: true,
               label: 'Projects',
             },

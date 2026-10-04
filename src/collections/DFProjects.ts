@@ -9,7 +9,7 @@ export const DFProjects: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'slug', 'category', 'website', 'year', 'location'],
+    defaultColumns: ['name', 'slug', 'category', 'typology', 'website', 'year'],
     group: 'Davud Farzulla Website',
     description: 'Davud Farzulla architecture & interior design projects.',
   },
@@ -92,14 +92,34 @@ export const DFProjects: CollectionConfig = {
               ],
             },
             {
-              name: 'category',
-              type: 'select',
-              label: 'Category',
-              defaultValue: 'Interior',
-              options: [
-                { label: 'Architecture', value: 'Architecture' },
-                { label: 'Interior', value: 'Interior' },
-                { label: 'Product', value: 'Product' },
+              type: 'row',
+              fields: [
+                {
+                  name: 'category',
+                  type: 'select',
+                  label: 'Category',
+                  defaultValue: 'Interior',
+                  options: [
+                    { label: 'Interior', value: 'Interior' },
+                    { label: 'Architecture', value: 'Architecture' },
+                    { label: 'Product', value: 'Product' },
+                  ],
+                  admin: { width: '50%' },
+                },
+                {
+                  name: 'typology',
+                  type: 'select',
+                  label: 'Section / Typology',
+                  defaultValue: 'Residential',
+                  options: [
+                    { label: 'Residential', value: 'Residential' },
+                    { label: 'Hospitality', value: 'Hospitality' },
+                    { label: 'Offices', value: 'Offices' },
+                    { label: 'Retail', value: 'Retail' },
+                    { label: 'Other', value: 'Other' },
+                  ],
+                  admin: { width: '50%' },
+                },
               ],
             },
             {

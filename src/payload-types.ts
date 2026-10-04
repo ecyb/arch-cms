@@ -399,6 +399,7 @@ export interface DfPage {
   id: number;
   title: string;
   slug: string;
+  section?: ('Interior' | 'Architecture' | 'Info' | 'News') | null;
   subtitle?: string | null;
   layout: (
     | {
@@ -427,7 +428,7 @@ export interface DfPage {
     | {
         tag?: string | null;
         title?: string | null;
-        projects?: (number | Project)[] | null;
+        projects?: (number | DfProject)[] | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'dfProjects';
@@ -490,7 +491,8 @@ export interface DfProject {
   location?: string | null;
   area?: string | null;
   year?: number | null;
-  category?: ('Architecture' | 'Interior' | 'Product') | null;
+  category?: ('Interior' | 'Architecture' | 'Product') | null;
+  typology?: ('Residential' | 'Hospitality' | 'Offices' | 'Retail' | 'Other') | null;
   coverImage?: (number | null) | Media;
   gallery?:
     | {
@@ -939,6 +941,7 @@ export interface PublicationsSelect<T extends boolean = true> {
 export interface DfPagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  section?: T;
   subtitle?: T;
   layout?:
     | T
@@ -1007,6 +1010,7 @@ export interface DfProjectsSelect<T extends boolean = true> {
   area?: T;
   year?: T;
   category?: T;
+  typology?: T;
   coverImage?: T;
   gallery?:
     | T
