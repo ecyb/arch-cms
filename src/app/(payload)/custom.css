@@ -86,35 +86,148 @@
   background: rgba(255, 85, 85, 0.08) !important;
 }
 
-
 /* ==========================================================================
-   Login Page Styling
+   Login Page — Luxury Architectural Dark Background with Vignette Overlay
    ========================================================================== */
+.template-minimal {
+  position: relative;
+  background-color: #0b0b0d !important;
+  background-image: 
+    radial-gradient(ellipse at center, rgba(10, 10, 14, 0.75) 0%, rgba(5, 5, 8, 0.95) 85%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.85) 100%),
+    url('/admin-login-bg.jpg') !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  min-height: 100vh !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.template-minimal::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, transparent 20%, rgba(0, 0, 0, 0.7) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.template-minimal__wrap {
+  position: relative;
+  z-index: 1;
+  background: rgba(18, 18, 22, 0.85) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 3rem 2.5rem !important;
+  box-shadow: 
+    0 30px 80px -15px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  max-width: 460px !important;
+  width: 100% !important;
+}
+
 .template-minimal .form-header {
   margin-bottom: 2rem;
 }
 
-.login__brand {
-  margin-bottom: 2.5rem;
+.template-minimal .login__brand {
+  margin-bottom: 2rem !important;
   display: flex;
   justify-content: center;
 }
 
-.login__brand svg {
-  max-width: 230px;
+.template-minimal .login__brand svg {
+  max-width: 210px;
   height: auto;
-  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.35));
+  color: #ffffff !important;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.45)) !important;
 }
 
-.form-header h1 {
-  font-size: 1.65rem !important;
+.template-minimal .login__brand span {
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-left-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.template-minimal .form-header h1 {
+  font-size: 1.5rem !important;
   font-weight: 500 !important;
   letter-spacing: -0.02em !important;
-  color: var(--theme-text) !important;
+  color: #ffffff !important;
+  text-align: center;
+}
+
+/* Glassmorphism Inputs */
+.template-minimal input[type="email"],
+.template-minimal input[type="password"],
+.template-minimal input[type="text"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  padding: 11px 14px !important;
+  font-size: 0.95rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.template-minimal input[type="email"]:focus,
+.template-minimal input[type="password"]:focus,
+.template-minimal input[type="text"]:focus {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  outline: none !important;
+}
+
+.template-minimal label,
+.template-minimal .field-label {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  margin-bottom: 0.35rem !important;
+}
+
+/* Minimalist Luxury Button */
+.template-minimal .btn--style-primary {
+  background: #ffffff !important;
+  color: #0b0b0d !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  padding: 13px 20px !important;
+  width: 100% !important;
+  margin-top: 1.25rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.template-minimal .btn--style-primary:hover {
+  background: #ebebeb !important;
+  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-1px);
+}
+
+.template-minimal a {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 0.82rem !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease !important;
+}
+
+.template-minimal a:hover {
+  color: #ffffff !important;
+  text-decoration: underline !important;
 }
 
 /* ==========================================================================
-   Buttons & Controls
+   Buttons & Controls (General Admin)
    ========================================================================== */
 .btn--style-primary {
   letter-spacing: 0.04em !important;
