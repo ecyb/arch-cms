@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { hasPermission } from '../access/roles'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -7,9 +8,9 @@ export const Media: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
+    create: hasPermission('manageMedia'),
+    update: hasPermission('manageMedia'),
+    delete: hasPermission('manageMedia'),
   },
   fields: [
     {

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { hasPermission } from '../access/roles'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -9,9 +10,9 @@ export const Projects: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
+    create: hasPermission('manageProjects'),
+    update: hasPermission('manageProjects'),
+    delete: hasPermission('manageProjects'),
   },
   fields: [
     {

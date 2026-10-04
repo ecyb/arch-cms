@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
+import { UserTypes } from './collections/UserTypes'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Projects } from './collections/Projects'
@@ -43,7 +44,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, Pages, Projects, Publications, Members, ContactInfoItems],
+  collections: [Users, UserTypes, Media, Pages, Projects, Publications, Members, ContactInfoItems],
   cors: ['*'],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'archia-payload-secret-key-987654321',
@@ -54,6 +55,7 @@ export default buildConfig({
     pool: {
       connectionString: dbUri,
     },
+    push: true,
   }),
   sharp,
 })
