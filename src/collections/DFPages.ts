@@ -9,9 +9,9 @@ export const DFPages: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'section', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'contentSource', 'categoryFilter', 'typologyFilter', 'updatedAt'],
     group: 'Davud Farzulla Website',
-    description: 'Manage Interior, Architecture, Info, and News sections.',
+    description: 'Dynamic website sections filtered automatically by Category, Typology, and Website.',
   },
   access: {
     read: () => true,
@@ -24,193 +24,90 @@ export const DFPages: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
-      label: 'Page Title',
+      label: 'Section Title',
     },
     {
       name: 'slug',
       type: 'text',
       required: true,
       unique: true,
-      label: 'URL Slug',
+      label: 'URL Route Slug',
       admin: {
         position: 'sidebar',
+        description: 'e.g. projects/interior/residential, projects/interior/hospitality, projects/architecture/residential, news, davud-farzulla',
       },
     },
     {
-      name: 'section',
+      name: 'contentSource',
       type: 'select',
-      label: 'Section Category',
+      label: 'Content Source (Automatic)',
+      defaultValue: 'projects',
+      required: true,
       options: [
-        { label: 'Interior', value: 'Interior' },
-        { label: 'Architecture', value: 'Architecture' },
-        { label: 'Info', value: 'Info' },
-        { label: 'News', value: 'News' },
+        { label: 'Automatic Projects Filter (By Category & Typology)', value: 'projects' },
+        { label: 'Automatic News & Publications Feed', value: 'news' },
+        { label: 'Studio Info & Founder Biography', value: 'info' },
       ],
       admin: {
         position: 'sidebar',
       },
     },
     {
-      name: 'subtitle',
+      type: 'row',
+      admin: {
+        condition: (data) => !data?.contentSource || data?.contentSource === 'projects',
+      },
+      fields: [
+        {
+          name: 'categoryFilter',
+          type: 'select',
+          label: 'Filter: Category',
+          defaultValue: 'Interior',
+          options: [
+            { label: 'Interior', value: 'Interior' },
+            { label: 'Architecture', value: 'Architecture' },
+            { label: 'All Categories', value: 'All' },
+          ],
+          admin: { width: '50%' },
+        },
+        {
+          name: 'typologyFilter',
+          type: 'select',
+          label: 'Filter: Typology',
+          defaultValue: 'Residential',
+          options: [
+            { label: 'Residential', value: 'Residential' },
+            { label: 'Hospitality', value: 'Hospitality' },
+            { label: 'Offices', value: 'Offices' },
+            { label: 'All Typologies', value: 'All' },
+          ],
+          admin: { width: '50%' },
+        },
+      ],
+    },
+    {
+      name: 'tagline',
       type: 'text',
       label: 'Subtitle / Tagline',
     },
     {
-      name: 'layout',
-      type: 'blocks',
-      required: true,
-      labels: {
-        singular: 'Section Block',
-        plural: 'Section Blocks',
+      name: 'description',
+      type: 'textarea',
+      label: 'Section Description / Curatorial Text',
+    },
+    {
+      name: 'heroImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Hero / Lead Section Image',
+    },
+    {
+      name: 'bio',
+      type: 'richText',
+      label: 'Extended Biography & Credentials',
+      admin: {
+        condition: (data) => data?.contentSource === 'info',
       },
-      blocks: [
-        // 1. Founder Biography & Portrait
-        {
-          slug: 'dfBiography',
-          labels: {
-            singular: 'Biography & Founder Profile',
-            plural: 'Biographies',
-          },
-          fields: [
-            {
-              name: 'eyebrow',
-              type: 'text',
-              defaultValue: 'FOUNDER & PRINCIPAL ARCHITECT',
-            },
-            {
-              name: 'quote',
-              type: 'textarea',
-              defaultValue:
-                'Architecture begins with attentive listening. We translate each client distinct rhythm of life into structures of timeless proportion, warmth, and permanence.',
-            },
-            {
-              name: 'bio',
-              type: 'richText',
-              label: 'Extended Biography',
-            },
-            {
-              name: 'portrait',
-              type: 'upload',
-              relationTo: 'media',
-              label: 'Portrait Photo',
-            },
-          ],
-        },
-
-        // 2. Featured Projects / Monograph Showcase
-        {
-          slug: 'dfProjects',
-          labels: {
-            singular: 'Selected Works Showcase',
-            plural: 'Selected Works Showcases',
-          },
-          fields: [
-            {
-              name: 'tag',
-              type: 'text',
-              defaultValue: '01 / ARCHITECTURAL COMMISSIONS',
-            },
-            {
-              name: 'title',
-              type: 'text',
-              defaultValue: 'Selected Commissions',
-            },
-            {
-              name: 'projects',
-              type: 'relationship',
-              relationTo: 'df-projects',
-              hasMany: true,
-              label: 'Projects',
-            },
-          ],
-        },
-
-        // 3. Full Width Media / Cinematic Video
-        {
-          slug: 'dfMedia',
-          labels: {
-            singular: 'Full Width Cinematic Media',
-            plural: 'Media Blocks',
-          },
-          fields: [
-            {
-              name: 'type',
-              type: 'select',
-              defaultValue: 'image',
-              options: [
-                { label: 'Image', value: 'image' },
-                { label: 'Video URL', value: 'video' },
-              ],
-            },
-            {
-              name: 'image',
-              type: 'upload',
-              relationTo: 'media',
-              admin: {
-                condition: (data, siblingData) => siblingData?.type === 'image',
-              },
-            },
-            {
-              name: 'videoUrl',
-              type: 'text',
-              admin: {
-                condition: (data, siblingData) => siblingData?.type === 'video',
-              },
-            },
-            {
-              name: 'caption',
-              type: 'text',
-              defaultValue: 'Architectural Composition & Material Permanence',
-            },
-          ],
-        },
-
-        // 4. Rich Text Statement / Essays
-        {
-          slug: 'dfContent',
-          labels: {
-            singular: 'Editorial & Text Essay',
-            plural: 'Text Essays',
-          },
-          fields: [
-            {
-              name: 'richText',
-              type: 'richText',
-            },
-          ],
-        },
-
-        // 5. Contact & Studio Inquiries
-        {
-          slug: 'dfContact',
-          labels: {
-            singular: 'Studio Briefing & Contact',
-            plural: 'Contact Blocks',
-          },
-          fields: [
-            {
-              name: 'headline',
-              type: 'text',
-              defaultValue: 'Private Commission Briefing',
-            },
-            {
-              name: 'email',
-              type: 'text',
-              defaultValue: 'davud@archia.com',
-            },
-            {
-              name: 'phone',
-              type: 'text',
-              defaultValue: '+44 (0) 20 7946 0928',
-            },
-            {
-              name: 'office',
-              type: 'text',
-              defaultValue: 'Fitzrovia, Central London',
-            },
-          ],
-        },
-      ],
     },
   ],
 }
