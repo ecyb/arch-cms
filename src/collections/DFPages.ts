@@ -32,11 +32,45 @@ export const DFPages: CollectionConfig = {
       label: 'Subtitle / Tagline',
     },
     {
+      type: 'row',
+      admin: {
+        condition: (data) => !data?.contentSource || data?.contentSource === 'projects',
+      },
+      fields: [
+        {
+          name: 'categoryFilter',
+          type: 'select',
+          label: 'Filter: Category',
+          defaultValue: 'Interior',
+          options: [
+            { label: 'Interior', value: 'Interior' },
+            { label: 'Architecture', value: 'Architecture' },
+            { label: 'All Categories', value: 'All' },
+          ],
+          admin: { width: '50%' },
+        },
+        {
+          name: 'typologyFilter',
+          type: 'select',
+          label: 'Filter: Typology',
+          defaultValue: 'Residential',
+          options: [
+            { label: 'Residential', value: 'Residential' },
+            { label: 'Hospitality', value: 'Hospitality' },
+            { label: 'Offices', value: 'Offices' },
+            { label: 'All Typologies', value: 'All' },
+          ],
+          admin: { width: '50%' },
+        },
+      ],
+    },
+    {
       name: 'description',
       type: 'textarea',
       label: 'Description / Biography Text',
       admin: {
         rows: 14,
+        condition: (data) => data?.contentSource === 'info',
       },
     },
     {
@@ -44,6 +78,9 @@ export const DFPages: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       label: 'Photo / Lead Image',
+      admin: {
+        condition: (data) => data?.contentSource === 'info',
+      },
     },
     {
       name: 'slug',
@@ -67,36 +104,8 @@ export const DFPages: CollectionConfig = {
         { label: 'Studio Info & Biography', value: 'info' },
       ],
       admin: {
-        hidden: true,
-      },
-    },
-    {
-      name: 'categoryFilter',
-      type: 'select',
-      label: 'Filtered Category',
-      defaultValue: 'Interior',
-      options: [
-        { label: 'Interior', value: 'Interior' },
-        { label: 'Architecture', value: 'Architecture' },
-        { label: 'All', value: 'All' },
-      ],
-      admin: {
-        hidden: true,
-      },
-    },
-    {
-      name: 'typologyFilter',
-      type: 'select',
-      label: 'Filtered Typology',
-      defaultValue: 'Residential',
-      options: [
-        { label: 'Residential', value: 'Residential' },
-        { label: 'Hospitality', value: 'Hospitality' },
-        { label: 'Offices', value: 'Offices' },
-        { label: 'All', value: 'All' },
-      ],
-      admin: {
-        hidden: true,
+        position: 'sidebar',
+        readOnly: true,
       },
     },
   ],

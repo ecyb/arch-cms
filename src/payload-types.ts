@@ -390,7 +390,7 @@ export interface Publication {
   createdAt: string;
 }
 /**
- * Dynamic website sections filtered automatically by Category, Typology, and Website.
+ * Davud Farzulla website sections (automatically populated).
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "df-pages".
@@ -398,31 +398,13 @@ export interface Publication {
 export interface DfPage {
   id: number;
   title: string;
-  /**
-   * e.g. projects/interior/residential, projects/interior/hospitality, projects/architecture/residential, news, davud-farzulla
-   */
-  slug: string;
-  contentSource: 'projects' | 'news' | 'info';
+  tagline?: string | null;
   categoryFilter?: ('Interior' | 'Architecture' | 'All') | null;
   typologyFilter?: ('Residential' | 'Hospitality' | 'Offices' | 'All') | null;
-  tagline?: string | null;
   description?: string | null;
   heroImage?: (number | null) | Media;
-  bio?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  slug: string;
+  contentSource?: ('projects' | 'news' | 'info') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -891,14 +873,13 @@ export interface PublicationsSelect<T extends boolean = true> {
  */
 export interface DfPagesSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
-  contentSource?: T;
+  tagline?: T;
   categoryFilter?: T;
   typologyFilter?: T;
-  tagline?: T;
   description?: T;
   heroImage?: T;
-  bio?: T;
+  slug?: T;
+  contentSource?: T;
   updatedAt?: T;
   createdAt?: T;
 }
