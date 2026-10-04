@@ -9,7 +9,7 @@ export const DFPublications: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'slug', 'date', 'latest'],
+    defaultColumns: ['name', 'slug', 'website', 'date', 'latest'],
     group: 'Davud Farzulla Website',
     description: 'Davud Farzulla news, press features, and monograph publications.',
   },
@@ -55,6 +55,22 @@ export const DFPublications: CollectionConfig = {
               type: 'checkbox',
               label: 'Featured / Latest Article',
               defaultValue: false,
+              admin: {
+                position: 'sidebar',
+              },
+            },
+            {
+              name: 'website',
+              type: 'select',
+              label: 'Website Destination',
+              defaultValue: 'DF',
+              options: [
+                { label: 'None', value: 'None' },
+                { label: 'Archia', value: 'Archia' },
+                { label: 'Magnum Projects', value: 'Magnum Projects' },
+                { label: 'DF (Davud Farzulla)', value: 'DF' },
+                { label: 'All Websites', value: 'All' },
+              ],
               admin: {
                 position: 'sidebar',
               },

@@ -9,7 +9,7 @@ export const DFProjects: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'slug', 'category', 'year', 'location'],
+    defaultColumns: ['name', 'slug', 'category', 'website', 'year', 'location'],
     group: 'Davud Farzulla Website',
     description: 'Davud Farzulla architecture & interior design projects.',
   },
@@ -71,14 +71,19 @@ export const DFProjects: CollectionConfig = {
                   name: 'area',
                   type: 'text',
                   label: 'Area',
-                  admin: { width: '33%' },
+                  admin: { width: '50%' },
                 },
                 {
                   name: 'year',
                   type: 'number',
                   label: 'Year',
-                  admin: { width: '33%' },
+                  admin: { width: '50%' },
                 },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
                 {
                   name: 'category',
                   type: 'select',
@@ -89,7 +94,21 @@ export const DFProjects: CollectionConfig = {
                     { label: 'Interior', value: 'Interior' },
                     { label: 'Product', value: 'Product' },
                   ],
-                  admin: { width: '33%' },
+                  admin: { width: '50%' },
+                },
+                {
+                  name: 'website',
+                  type: 'select',
+                  label: 'Website Destination',
+                  defaultValue: 'DF',
+                  options: [
+                    { label: 'None', value: 'None' },
+                    { label: 'Archia', value: 'Archia' },
+                    { label: 'Magnum Projects', value: 'Magnum Projects' },
+                    { label: 'DF (Davud Farzulla)', value: 'DF' },
+                    { label: 'All Websites', value: 'All' },
+                  ],
+                  admin: { width: '50%' },
                 },
               ],
             },
