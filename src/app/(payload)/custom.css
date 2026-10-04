@@ -5,7 +5,65 @@
   --font-family-mono: "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
 }
 
-/* Login Page Customization */
+/* ==========================================================================
+   Sidebar & Navigation Styling (Crisp, High-Legibility Architectural Design)
+   ========================================================================== */
+
+/* Nav Group Headings (ADMINISTRATION, SITE CONTENT, etc.) */
+.nav-group__toggle,
+.nav__group-label,
+.nav-group__label {
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--theme-elevation-500, #9e9e9e) !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.4rem !important;
+  align-items: center !important;
+}
+
+.nav-group__toggle:hover,
+.nav-group__toggle:focus-visible {
+  color: var(--theme-elevation-900, #ffffff) !important;
+}
+
+.nav-group__toggle svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* Nav Item Links (Pages, Projects, Publications, etc.) */
+.nav__link,
+.nav-group a,
+.nav__link-label {
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.01em !important;
+  color: var(--theme-elevation-850, #f2f2f2) !important;
+  border-radius: 4px;
+  transition: all 0.15s ease-in-out;
+}
+
+.nav__link {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+
+.nav__link:hover,
+.nav-group a:hover {
+  color: #ffffff !important;
+}
+
+/* Active Nav Indicator */
+.nav__link-indicator {
+  background-color: var(--theme-elevation-1000, #ffffff) !important;
+}
+
+/* ==========================================================================
+   Login Page Styling
+   ========================================================================== */
 .template-minimal .form-header {
   margin-bottom: 2rem;
 }
@@ -17,49 +75,31 @@
 }
 
 .login__brand svg {
-  max-width: 220px;
+  max-width: 230px;
   height: auto;
-  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.35));
 }
 
-/* Clean Form Aesthetic */
 .form-header h1 {
-  font-size: 1.5rem !important;
+  font-size: 1.65rem !important;
   font-weight: 500 !important;
   letter-spacing: -0.02em !important;
   color: var(--theme-text) !important;
 }
 
-/* Nav Group Headings */
-.nav__group-label,
-.nav-group__label {
-  font-size: 0.68rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  color: var(--theme-elevation-500, #888) !important;
-  margin-top: 1rem !important;
-  margin-bottom: 0.35rem !important;
-}
-
-/* Nav Items */
-.nav__link,
-.nav-group a {
-  font-size: 0.88rem !important;
-  letter-spacing: 0.01em !important;
-  border-radius: 4px;
-  transition: all 0.15s ease-in-out;
-}
-
-/* Buttons */
+/* ==========================================================================
+   Buttons & Controls
+   ========================================================================== */
 .btn--style-primary {
   letter-spacing: 0.04em !important;
   text-transform: uppercase !important;
-  font-size: 0.78rem !important;
+  font-size: 0.88rem !important;
   font-weight: 600 !important;
 }
 
-/* Scrollbar refinement */
+/* ==========================================================================
+   Scrollbars
+   ========================================================================== */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -70,10 +110,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(120, 120, 120, 0.25);
+  background: rgba(140, 140, 140, 0.3);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 120, 120, 0.45);
+  background: rgba(140, 140, 140, 0.55);
 }
