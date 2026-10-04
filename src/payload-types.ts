@@ -390,7 +390,7 @@ export interface Publication {
   createdAt: string;
 }
 /**
- * Manage Interior, Architecture, Info, and News sections.
+ * Dynamic website sections filtered automatically by Category, Typology, and Website.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "df-pages".
@@ -398,80 +398,31 @@ export interface Publication {
 export interface DfPage {
   id: number;
   title: string;
+  /**
+   * e.g. projects/interior/residential, projects/interior/hospitality, projects/architecture/residential, news, davud-farzulla
+   */
   slug: string;
-  section?: ('Interior' | 'Architecture' | 'Info' | 'News') | null;
-  subtitle?: string | null;
-  layout: (
-    | {
-        eyebrow?: string | null;
-        quote?: string | null;
-        bio?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        portrait?: (number | null) | Media;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'dfBiography';
-      }
-    | {
-        tag?: string | null;
-        title?: string | null;
-        projects?: (number | DfProject)[] | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'dfProjects';
-      }
-    | {
-        type?: ('image' | 'video') | null;
-        image?: (number | null) | Media;
-        videoUrl?: string | null;
-        caption?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'dfMedia';
-      }
-    | {
-        richText?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'dfContent';
-      }
-    | {
-        headline?: string | null;
-        email?: string | null;
-        phone?: string | null;
-        office?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'dfContact';
-      }
-  )[];
+  contentSource: 'projects' | 'news' | 'info';
+  categoryFilter?: ('Interior' | 'Architecture' | 'All') | null;
+  typologyFilter?: ('Residential' | 'Hospitality' | 'Offices' | 'All') | null;
+  tagline?: string | null;
+  description?: string | null;
+  heroImage?: (number | null) | Media;
+  bio?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -941,58 +892,13 @@ export interface PublicationsSelect<T extends boolean = true> {
 export interface DfPagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  section?: T;
-  subtitle?: T;
-  layout?:
-    | T
-    | {
-        dfBiography?:
-          | T
-          | {
-              eyebrow?: T;
-              quote?: T;
-              bio?: T;
-              portrait?: T;
-              id?: T;
-              blockName?: T;
-            };
-        dfProjects?:
-          | T
-          | {
-              tag?: T;
-              title?: T;
-              projects?: T;
-              id?: T;
-              blockName?: T;
-            };
-        dfMedia?:
-          | T
-          | {
-              type?: T;
-              image?: T;
-              videoUrl?: T;
-              caption?: T;
-              id?: T;
-              blockName?: T;
-            };
-        dfContent?:
-          | T
-          | {
-              richText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        dfContact?:
-          | T
-          | {
-              headline?: T;
-              email?: T;
-              phone?: T;
-              office?: T;
-              id?: T;
-              blockName?: T;
-            };
-      };
+  contentSource?: T;
+  categoryFilter?: T;
+  typologyFilter?: T;
+  tagline?: T;
+  description?: T;
+  heroImage?: T;
+  bio?: T;
   updatedAt?: T;
   createdAt?: T;
 }
