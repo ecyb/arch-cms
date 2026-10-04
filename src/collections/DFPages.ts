@@ -4,14 +4,14 @@ import { hasPermission } from '../access/roles'
 export const DFPages: CollectionConfig = {
   slug: 'df-pages',
   labels: {
-    singular: 'Davud Farzulla Page',
-    plural: 'Davud Farzulla Pages',
+    singular: 'Davud Farzulla Section',
+    plural: 'Davud Farzulla Sections',
   },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    group: 'Site Content',
-    description: 'Personal monograph, architecture portfolio, and editorial pages for Davud Farzulla.',
+    group: 'Davud Farzulla Website',
+    description: 'Manage Interior, Architecture, Info, and News sections.',
   },
   access: {
     read: () => true,

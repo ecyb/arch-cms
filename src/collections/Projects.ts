@@ -6,7 +6,7 @@ export const Projects: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'category', 'year', 'location', 'featured_archia'],
-    group: 'Site Content',
+    group: 'Archia Website',
   },
   access: {
     read: () => true,

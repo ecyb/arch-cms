@@ -6,7 +6,7 @@ export const Publications: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'date', 'latest'],
-    group: 'Site Content',
+    group: 'Archia Website',
   },
   access: {
     read: () => true,

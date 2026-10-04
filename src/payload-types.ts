@@ -442,7 +442,7 @@ export interface Publication {
   createdAt: string;
 }
 /**
- * Personal monograph, architecture portfolio, and editorial pages for Davud Farzulla.
+ * Manage Interior, Architecture, Info, and News sections.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "df-pages".
