@@ -94,6 +94,9 @@ export const DFPages: CollectionConfig = {
       name: 'description',
       type: 'textarea',
       label: 'Section Description / Curatorial Text',
+      admin: {
+        rows: 14,
+      },
     },
     {
       name: 'heroImage',
