@@ -61,6 +61,32 @@
   background-color: var(--theme-elevation-1000, #ffffff) !important;
 }
 
+/* Logout Button in Sidebar */
+.nav__log-out {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  text-decoration: none !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  color: var(--theme-elevation-650, #aaaaaa) !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.nav__log-out::after {
+  content: "Log Out";
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.nav__log-out:hover {
+  color: #ff5555 !important;
+  background: rgba(255, 85, 85, 0.08) !important;
+}
+
+
 /* ==========================================================================
    Login Page Styling
    ========================================================================== */
