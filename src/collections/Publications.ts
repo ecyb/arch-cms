@@ -5,6 +5,7 @@ export const Publications: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'date', 'latest'],
+    group: 'Site Content',
   },
   access: {
     read: () => true,

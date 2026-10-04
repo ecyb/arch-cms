@@ -32,6 +32,16 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      titleSuffix: '— ARCHIA Studio CMS',
+      favicon: '/favicon.svg',
+    },
+    components: {
+      graphics: {
+        Logo: '/components/Logo#Logo',
+        Icon: '/components/Icon#Icon',
+      },
+    },
   },
   collections: [Users, Media, Pages, Projects, Publications, Members, ContactInfoItems],
   cors: ['*'],

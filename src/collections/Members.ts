@@ -5,6 +5,7 @@ export const Members: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'role'],
+    group: 'Studio & Practice',
   },
   access: {
     read: () => true,

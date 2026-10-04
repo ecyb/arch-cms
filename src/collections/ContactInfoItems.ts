@@ -8,6 +8,7 @@ export const ContactInfoItems: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'contact_item_1_label',
+    group: 'Studio & Practice',
   },
   access: {
     read: () => true,
