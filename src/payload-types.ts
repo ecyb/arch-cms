@@ -68,8 +68,10 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    'user-types': UserType;
     media: Media;
     pages: Page;
+    'df-pages': DfPage;
     projects: Project;
     publications: Publication;
     members: Member;
@@ -82,8 +84,10 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    'user-types': UserTypesSelect<false> | UserTypesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    'df-pages': DfPagesSelect<false> | DfPagesSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     publications: PublicationsSelect<false> | PublicationsSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
@@ -133,6 +137,12 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  name?: string | null;
+  role: 'admin' | 'moderator' | 'custom';
+  /**
+   * Select the custom role with customized permissions
+   */
+  customType?: (number | null) | UserType;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -152,6 +162,30 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
+}
+/**
+ * Create custom roles and manage granular permissions for studio team members.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "user-types".
+ */
+export interface UserType {
+  id: number;
+  title: string;
+  /**
+   * Unique identifier, e.g. copywriter, project-reviewer
+   */
+  slug: string;
+  description?: string | null;
+  permissions?: {
+    managePages?: boolean | null;
+    manageProjects?: boolean | null;
+    managePublications?: boolean | null;
+    manageMedia?: boolean | null;
+    manageStudio?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -408,6 +442,91 @@ export interface Publication {
   createdAt: string;
 }
 /**
+ * Personal monograph, architecture portfolio, and editorial pages for Davud Farzulla.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "df-pages".
+ */
+export interface DfPage {
+  id: number;
+  title: string;
+  slug: string;
+  subtitle?: string | null;
+  layout: (
+    | {
+        eyebrow?: string | null;
+        quote?: string | null;
+        bio?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        portrait?: (number | null) | Media;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'dfBiography';
+      }
+    | {
+        tag?: string | null;
+        title?: string | null;
+        projects?: (number | Project)[] | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'dfProjects';
+      }
+    | {
+        type?: ('image' | 'video') | null;
+        image?: (number | null) | Media;
+        videoUrl?: string | null;
+        caption?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'dfMedia';
+      }
+    | {
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'dfContent';
+      }
+    | {
+        headline?: string | null;
+        email?: string | null;
+        phone?: string | null;
+        office?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'dfContact';
+      }
+  )[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
@@ -467,12 +586,20 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
+        relationTo: 'user-types';
+        value: number | UserType;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'df-pages';
+        value: number | DfPage;
       } | null)
     | ({
         relationTo: 'projects';
@@ -537,6 +664,9 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  customType?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -554,6 +684,26 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "user-types_select".
+ */
+export interface UserTypesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  permissions?:
+    | T
+    | {
+        managePages?: T;
+        manageProjects?: T;
+        managePublications?: T;
+        manageMedia?: T;
+        manageStudio?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -717,6 +867,67 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               richText?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "df-pages_select".
+ */
+export interface DfPagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  subtitle?: T;
+  layout?:
+    | T
+    | {
+        dfBiography?:
+          | T
+          | {
+              eyebrow?: T;
+              quote?: T;
+              bio?: T;
+              portrait?: T;
+              id?: T;
+              blockName?: T;
+            };
+        dfProjects?:
+          | T
+          | {
+              tag?: T;
+              title?: T;
+              projects?: T;
+              id?: T;
+              blockName?: T;
+            };
+        dfMedia?:
+          | T
+          | {
+              type?: T;
+              image?: T;
+              videoUrl?: T;
+              caption?: T;
+              id?: T;
+              blockName?: T;
+            };
+        dfContent?:
+          | T
+          | {
+              richText?: T;
+              id?: T;
+              blockName?: T;
+            };
+        dfContact?:
+          | T
+          | {
+              headline?: T;
+              email?: T;
+              phone?: T;
+              office?: T;
               id?: T;
               blockName?: T;
             };

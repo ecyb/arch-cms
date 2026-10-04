@@ -9,6 +9,7 @@ import { Users } from './collections/Users'
 import { UserTypes } from './collections/UserTypes'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { DFPages } from './collections/DFPages'
 import { Projects } from './collections/Projects'
 import { Publications } from './collections/Publications'
 import { Members } from './collections/Members'
@@ -44,7 +45,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, UserTypes, Media, Pages, Projects, Publications, Members, ContactInfoItems],
+  collections: [Users, UserTypes, Media, Pages, DFPages, Projects, Publications, Members, ContactInfoItems],
   cors: ['*'],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'archia-payload-secret-key-987654321',

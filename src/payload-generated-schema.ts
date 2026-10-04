@@ -24,6 +24,10 @@ import {
 } from '@payloadcms/db-postgres/drizzle/pg-core'
 import { sql, relations } from '@payloadcms/db-postgres/drizzle'
 export const enum_users_role = pgEnum('enum_users_role', ['admin', 'moderator', 'custom'])
+export const enum_df_pages_blocks_df_media_type = pgEnum('enum_df_pages_blocks_df_media_type', [
+  'image',
+  'video',
+])
 export const enum_projects_website = pgEnum('enum_projects_website', [
   'None',
   'Archia',
@@ -609,6 +613,182 @@ export const pages_rels = pgTable(
   ],
 )
 
+export const df_pages_blocks_df_biography = pgTable(
+  'df_pages_blocks_df_biography',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    _path: text('_path').notNull(),
+    id: varchar('id').primaryKey(),
+    eyebrow: varchar('eyebrow').default('FOUNDER & PRINCIPAL ARCHITECT'),
+    quote: varchar('quote').default(
+      'Architecture begins with attentive listening. We translate each client distinct rhythm of life into structures of timeless proportion, warmth, and permanence.',
+    ),
+    bio: jsonb('bio'),
+    portrait: integer('portrait_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    blockName: varchar('block_name'),
+  },
+  (columns) => [
+    index('df_pages_blocks_df_biography_order_idx').on(columns._order),
+    index('df_pages_blocks_df_biography_parent_id_idx').on(columns._parentID),
+    index('df_pages_blocks_df_biography_path_idx').on(columns._path),
+    index('df_pages_blocks_df_biography_portrait_idx').on(columns.portrait),
+    foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [df_pages.id],
+      name: 'df_pages_blocks_df_biography_parent_id_fk',
+    }).onDelete('cascade'),
+  ],
+)
+
+export const df_pages_blocks_df_projects = pgTable(
+  'df_pages_blocks_df_projects',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    _path: text('_path').notNull(),
+    id: varchar('id').primaryKey(),
+    tag: varchar('tag').default('01 / ARCHITECTURAL COMMISSIONS'),
+    title: varchar('title').default('Selected Commissions'),
+    blockName: varchar('block_name'),
+  },
+  (columns) => [
+    index('df_pages_blocks_df_projects_order_idx').on(columns._order),
+    index('df_pages_blocks_df_projects_parent_id_idx').on(columns._parentID),
+    index('df_pages_blocks_df_projects_path_idx').on(columns._path),
+    foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [df_pages.id],
+      name: 'df_pages_blocks_df_projects_parent_id_fk',
+    }).onDelete('cascade'),
+  ],
+)
+
+export const df_pages_blocks_df_media = pgTable(
+  'df_pages_blocks_df_media',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    _path: text('_path').notNull(),
+    id: varchar('id').primaryKey(),
+    type: enum_df_pages_blocks_df_media_type('type').default('image'),
+    image: integer('image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    videoUrl: varchar('video_url'),
+    caption: varchar('caption').default('Architectural Composition & Material Permanence'),
+    blockName: varchar('block_name'),
+  },
+  (columns) => [
+    index('df_pages_blocks_df_media_order_idx').on(columns._order),
+    index('df_pages_blocks_df_media_parent_id_idx').on(columns._parentID),
+    index('df_pages_blocks_df_media_path_idx').on(columns._path),
+    index('df_pages_blocks_df_media_image_idx').on(columns.image),
+    foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [df_pages.id],
+      name: 'df_pages_blocks_df_media_parent_id_fk',
+    }).onDelete('cascade'),
+  ],
+)
+
+export const df_pages_blocks_df_content = pgTable(
+  'df_pages_blocks_df_content',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    _path: text('_path').notNull(),
+    id: varchar('id').primaryKey(),
+    richText: jsonb('rich_text'),
+    blockName: varchar('block_name'),
+  },
+  (columns) => [
+    index('df_pages_blocks_df_content_order_idx').on(columns._order),
+    index('df_pages_blocks_df_content_parent_id_idx').on(columns._parentID),
+    index('df_pages_blocks_df_content_path_idx').on(columns._path),
+    foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [df_pages.id],
+      name: 'df_pages_blocks_df_content_parent_id_fk',
+    }).onDelete('cascade'),
+  ],
+)
+
+export const df_pages_blocks_df_contact = pgTable(
+  'df_pages_blocks_df_contact',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    _path: text('_path').notNull(),
+    id: varchar('id').primaryKey(),
+    headline: varchar('headline').default('Private Commission Briefing'),
+    email: varchar('email').default('davud@archia.com'),
+    phone: varchar('phone').default('+44 (0) 20 7946 0928'),
+    office: varchar('office').default('Fitzrovia, Central London'),
+    blockName: varchar('block_name'),
+  },
+  (columns) => [
+    index('df_pages_blocks_df_contact_order_idx').on(columns._order),
+    index('df_pages_blocks_df_contact_parent_id_idx').on(columns._parentID),
+    index('df_pages_blocks_df_contact_path_idx').on(columns._path),
+    foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [df_pages.id],
+      name: 'df_pages_blocks_df_contact_parent_id_fk',
+    }).onDelete('cascade'),
+  ],
+)
+
+export const df_pages = pgTable(
+  'df_pages',
+  {
+    id: serial('id').primaryKey(),
+    title: varchar('title').notNull(),
+    slug: varchar('slug').notNull(),
+    subtitle: varchar('subtitle'),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => [
+    uniqueIndex('df_pages_slug_idx').on(columns.slug),
+    index('df_pages_updated_at_idx').on(columns.updatedAt),
+    index('df_pages_created_at_idx').on(columns.createdAt),
+  ],
+)
+
+export const df_pages_rels = pgTable(
+  'df_pages_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: integer('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    projectsID: integer('projects_id'),
+  },
+  (columns) => [
+    index('df_pages_rels_order_idx').on(columns.order),
+    index('df_pages_rels_parent_idx').on(columns.parent),
+    index('df_pages_rels_path_idx').on(columns.path),
+    index('df_pages_rels_projects_id_idx').on(columns.projectsID),
+    foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [df_pages.id],
+      name: 'df_pages_rels_parent_fk',
+    }).onDelete('cascade'),
+    foreignKey({
+      columns: [columns['projectsID']],
+      foreignColumns: [projects.id],
+      name: 'df_pages_rels_projects_fk',
+    }).onDelete('cascade'),
+  ],
+)
+
 export const projects_gallery = pgTable(
   'projects_gallery',
   {
@@ -797,6 +977,7 @@ export const payload_locked_documents_rels = pgTable(
     'user-typesID': integer('user_types_id'),
     mediaID: integer('media_id'),
     pagesID: integer('pages_id'),
+    'df-pagesID': integer('df_pages_id'),
     projectsID: integer('projects_id'),
     publicationsID: integer('publications_id'),
     membersID: integer('members_id'),
@@ -810,6 +991,7 @@ export const payload_locked_documents_rels = pgTable(
     index('payload_locked_documents_rels_user_types_id_idx').on(columns['user-typesID']),
     index('payload_locked_documents_rels_media_id_idx').on(columns.mediaID),
     index('payload_locked_documents_rels_pages_id_idx').on(columns.pagesID),
+    index('payload_locked_documents_rels_df_pages_id_idx').on(columns['df-pagesID']),
     index('payload_locked_documents_rels_projects_id_idx').on(columns.projectsID),
     index('payload_locked_documents_rels_publications_id_idx').on(columns.publicationsID),
     index('payload_locked_documents_rels_members_id_idx').on(columns.membersID),
@@ -840,6 +1022,11 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['pagesID']],
       foreignColumns: [pages.id],
       name: 'payload_locked_documents_rels_pages_fk',
+    }).onDelete('cascade'),
+    foreignKey({
+      columns: [columns['df-pagesID']],
+      foreignColumns: [df_pages.id],
+      name: 'payload_locked_documents_rels_df_pages_fk',
     }).onDelete('cascade'),
     foreignKey({
       columns: [columns['projectsID']],
@@ -1194,6 +1381,98 @@ export const relations_pages = relations(pages, ({ many }) => ({
     relationName: '_rels',
   }),
 }))
+export const relations_df_pages_blocks_df_biography = relations(
+  df_pages_blocks_df_biography,
+  ({ one }) => ({
+    _parentID: one(df_pages, {
+      fields: [df_pages_blocks_df_biography._parentID],
+      references: [df_pages.id],
+      relationName: '_blocks_dfBiography',
+    }),
+    portrait: one(media, {
+      fields: [df_pages_blocks_df_biography.portrait],
+      references: [media.id],
+      relationName: 'portrait',
+    }),
+  }),
+)
+export const relations_df_pages_blocks_df_projects = relations(
+  df_pages_blocks_df_projects,
+  ({ one }) => ({
+    _parentID: one(df_pages, {
+      fields: [df_pages_blocks_df_projects._parentID],
+      references: [df_pages.id],
+      relationName: '_blocks_dfProjects',
+    }),
+  }),
+)
+export const relations_df_pages_blocks_df_media = relations(
+  df_pages_blocks_df_media,
+  ({ one }) => ({
+    _parentID: one(df_pages, {
+      fields: [df_pages_blocks_df_media._parentID],
+      references: [df_pages.id],
+      relationName: '_blocks_dfMedia',
+    }),
+    image: one(media, {
+      fields: [df_pages_blocks_df_media.image],
+      references: [media.id],
+      relationName: 'image',
+    }),
+  }),
+)
+export const relations_df_pages_blocks_df_content = relations(
+  df_pages_blocks_df_content,
+  ({ one }) => ({
+    _parentID: one(df_pages, {
+      fields: [df_pages_blocks_df_content._parentID],
+      references: [df_pages.id],
+      relationName: '_blocks_dfContent',
+    }),
+  }),
+)
+export const relations_df_pages_blocks_df_contact = relations(
+  df_pages_blocks_df_contact,
+  ({ one }) => ({
+    _parentID: one(df_pages, {
+      fields: [df_pages_blocks_df_contact._parentID],
+      references: [df_pages.id],
+      relationName: '_blocks_dfContact',
+    }),
+  }),
+)
+export const relations_df_pages_rels = relations(df_pages_rels, ({ one }) => ({
+  parent: one(df_pages, {
+    fields: [df_pages_rels.parent],
+    references: [df_pages.id],
+    relationName: '_rels',
+  }),
+  projectsID: one(projects, {
+    fields: [df_pages_rels.projectsID],
+    references: [projects.id],
+    relationName: 'projects',
+  }),
+}))
+export const relations_df_pages = relations(df_pages, ({ many }) => ({
+  _blocks_dfBiography: many(df_pages_blocks_df_biography, {
+    relationName: '_blocks_dfBiography',
+  }),
+  _blocks_dfProjects: many(df_pages_blocks_df_projects, {
+    relationName: '_blocks_dfProjects',
+  }),
+  _blocks_dfMedia: many(df_pages_blocks_df_media, {
+    relationName: '_blocks_dfMedia',
+  }),
+  _blocks_dfContent: many(df_pages_blocks_df_content, {
+    relationName: '_blocks_dfContent',
+  }),
+  _blocks_dfContact: many(df_pages_blocks_df_contact, {
+    relationName: '_blocks_dfContact',
+  }),
+  _rels: many(df_pages_rels, {
+    relationName: '_rels',
+  }),
+}))
 export const relations_projects_gallery = relations(projects_gallery, ({ one }) => ({
   _parentID: one(projects, {
     fields: [projects_gallery._parentID],
@@ -1265,6 +1544,11 @@ export const relations_payload_locked_documents_rels = relations(
       references: [pages.id],
       relationName: 'pages',
     }),
+    'df-pagesID': one(df_pages, {
+      fields: [payload_locked_documents_rels['df-pagesID']],
+      references: [df_pages.id],
+      relationName: 'df-pages',
+    }),
     projectsID: one(projects, {
       fields: [payload_locked_documents_rels.projectsID],
       references: [projects.id],
@@ -1319,6 +1603,7 @@ export const relations_payload_migrations = relations(payload_migrations, () => 
 
 type DatabaseSchema = {
   enum_users_role: typeof enum_users_role
+  enum_df_pages_blocks_df_media_type: typeof enum_df_pages_blocks_df_media_type
   enum_projects_website: typeof enum_projects_website
   enum_publications_website: typeof enum_publications_website
   users_sessions: typeof users_sessions
@@ -1343,6 +1628,13 @@ type DatabaseSchema = {
   pages_blocks_content_block: typeof pages_blocks_content_block
   pages: typeof pages
   pages_rels: typeof pages_rels
+  df_pages_blocks_df_biography: typeof df_pages_blocks_df_biography
+  df_pages_blocks_df_projects: typeof df_pages_blocks_df_projects
+  df_pages_blocks_df_media: typeof df_pages_blocks_df_media
+  df_pages_blocks_df_content: typeof df_pages_blocks_df_content
+  df_pages_blocks_df_contact: typeof df_pages_blocks_df_contact
+  df_pages: typeof df_pages
+  df_pages_rels: typeof df_pages_rels
   projects_gallery: typeof projects_gallery
   projects: typeof projects
   publications: typeof publications
@@ -1376,6 +1668,13 @@ type DatabaseSchema = {
   relations_pages_blocks_content_block: typeof relations_pages_blocks_content_block
   relations_pages_rels: typeof relations_pages_rels
   relations_pages: typeof relations_pages
+  relations_df_pages_blocks_df_biography: typeof relations_df_pages_blocks_df_biography
+  relations_df_pages_blocks_df_projects: typeof relations_df_pages_blocks_df_projects
+  relations_df_pages_blocks_df_media: typeof relations_df_pages_blocks_df_media
+  relations_df_pages_blocks_df_content: typeof relations_df_pages_blocks_df_content
+  relations_df_pages_blocks_df_contact: typeof relations_df_pages_blocks_df_contact
+  relations_df_pages_rels: typeof relations_df_pages_rels
+  relations_df_pages: typeof relations_df_pages
   relations_projects_gallery: typeof relations_projects_gallery
   relations_projects: typeof relations_projects
   relations_publications: typeof relations_publications

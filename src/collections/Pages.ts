@@ -3,6 +3,10 @@ import { hasPermission } from '../access/roles'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  labels: {
+    singular: 'Archia Page',
+    plural: 'Archia Pages',
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
