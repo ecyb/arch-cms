@@ -67,15 +67,17 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
-    'user-types': UserType;
-    media: Media;
     pages: Page;
-    'df-pages': DfPage;
     projects: Project;
     publications: Publication;
+    'df-pages': DfPage;
+    'df-projects': DfProject;
+    'df-publications': DfPublication;
+    media: Media;
     members: Member;
     contact_info_items: ContactInfoItem;
+    users: User;
+    'user-types': UserType;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -83,15 +85,17 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    'user-types': UserTypesSelect<false> | UserTypesSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    'df-pages': DfPagesSelect<false> | DfPagesSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     publications: PublicationsSelect<false> | PublicationsSelect<true>;
+    'df-pages': DfPagesSelect<false> | DfPagesSelect<true>;
+    'df-projects': DfProjectsSelect<false> | DfProjectsSelect<true>;
+    'df-publications': DfPublicationsSelect<false> | DfPublicationsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
     contact_info_items: ContactInfoItemsSelect<false> | ContactInfoItemsSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
+    'user-types': UserTypesSelect<false> | UserTypesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -130,81 +134,6 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: number;
-  name?: string | null;
-  role: 'admin' | 'moderator' | 'custom';
-  /**
-   * Select the custom role with customized permissions
-   */
-  customType?: (number | null) | UserType;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
-}
-/**
- * Create custom roles and manage granular permissions for studio team members.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "user-types".
- */
-export interface UserType {
-  id: number;
-  title: string;
-  /**
-   * Unique identifier, e.g. copywriter, project-reviewer
-   */
-  slug: string;
-  description?: string | null;
-  permissions?: {
-    managePages?: boolean | null;
-    manageProjects?: boolean | null;
-    managePublications?: boolean | null;
-    manageMedia?: boolean | null;
-    manageStudio?: boolean | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -412,6 +341,25 @@ export interface Project {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "publications".
  */
 export interface Publication {
@@ -527,6 +475,55 @@ export interface DfPage {
   createdAt: string;
 }
 /**
+ * Davud Farzulla architecture & interior design projects.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "df-projects".
+ */
+export interface DfProject {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string | null;
+  client?: string | null;
+  location?: string | null;
+  area?: string | null;
+  year?: number | null;
+  category?: ('Architecture' | 'Interior' | 'Product') | null;
+  coverImage?: (number | null) | Media;
+  gallery?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Davud Farzulla news, press features, and monograph publications.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "df-publications".
+ */
+export interface DfPublication {
+  id: number;
+  name: string;
+  slug: string;
+  date?: string | null;
+  latest?: boolean | null;
+  subtitle?: string | null;
+  body?: string | null;
+  coverImage?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
@@ -559,6 +556,62 @@ export interface ContactInfoItem {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  name?: string | null;
+  role: 'admin' | 'moderator' | 'custom';
+  /**
+   * Select the custom role with customized permissions
+   */
+  customType?: (number | null) | UserType;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * Create custom roles and manage granular permissions for studio team members.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "user-types".
+ */
+export interface UserType {
+  id: number;
+  title: string;
+  /**
+   * Unique identifier, e.g. copywriter, project-reviewer
+   */
+  slug: string;
+  description?: string | null;
+  permissions?: {
+    managePages?: boolean | null;
+    manageProjects?: boolean | null;
+    managePublications?: boolean | null;
+    manageMedia?: boolean | null;
+    manageStudio?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -582,24 +635,8 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'user-types';
-        value: number | UserType;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
-      } | null)
-    | ({
         relationTo: 'pages';
         value: number | Page;
-      } | null)
-    | ({
-        relationTo: 'df-pages';
-        value: number | DfPage;
       } | null)
     | ({
         relationTo: 'projects';
@@ -610,12 +647,36 @@ export interface PayloadLockedDocument {
         value: number | Publication;
       } | null)
     | ({
+        relationTo: 'df-pages';
+        value: number | DfPage;
+      } | null)
+    | ({
+        relationTo: 'df-projects';
+        value: number | DfProject;
+      } | null)
+    | ({
+        relationTo: 'df-publications';
+        value: number | DfPublication;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
         relationTo: 'members';
         value: number | Member;
       } | null)
     | ({
         relationTo: 'contact_info_items';
         value: number | ContactInfoItem;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'user-types';
+        value: number | UserType;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -658,70 +719,6 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  name?: T;
-  role?: T;
-  customType?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "user-types_select".
- */
-export interface UserTypesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  description?: T;
-  permissions?:
-    | T
-    | {
-        managePages?: T;
-        manageProjects?: T;
-        managePublications?: T;
-        manageMedia?: T;
-        manageStudio?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -876,6 +873,65 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  client?: T;
+  location?: T;
+  area?: T;
+  year?: T;
+  category?: T;
+  website?: T;
+  status?: T;
+  budget?: T;
+  featured_archia?: T;
+  featured_mp?: T;
+  sort?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        page_title?: T;
+        meta_description?: T;
+        social_image?: T;
+      };
+  directusId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publications_select".
+ */
+export interface PublicationsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  date?: T;
+  latest?: T;
+  website?: T;
+  body?: T;
+  coverImage?: T;
+  seo?:
+    | T
+    | {
+        page_title?: T;
+        meta_description?: T;
+        social_image?: T;
+      };
+  directusId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "df-pages_select".
  */
 export interface DfPagesSelect<T extends boolean = true> {
@@ -937,9 +993,9 @@ export interface DfPagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects_select".
+ * via the `definition` "df-projects_select".
  */
-export interface ProjectsSelect<T extends boolean = true> {
+export interface DfProjectsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   description?: T;
@@ -948,51 +1004,55 @@ export interface ProjectsSelect<T extends boolean = true> {
   area?: T;
   year?: T;
   category?: T;
-  website?: T;
-  status?: T;
-  budget?: T;
-  featured_archia?: T;
-  featured_mp?: T;
-  sort?: T;
+  coverImage?: T;
   gallery?:
     | T
     | {
         image?: T;
+        caption?: T;
         id?: T;
       };
   seo?:
     | T
     | {
-        page_title?: T;
-        meta_description?: T;
-        social_image?: T;
+        title?: T;
+        description?: T;
       };
-  directusId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "publications_select".
+ * via the `definition` "df-publications_select".
  */
-export interface PublicationsSelect<T extends boolean = true> {
+export interface DfPublicationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   date?: T;
   latest?: T;
-  website?: T;
+  subtitle?: T;
   body?: T;
   coverImage?: T;
-  seo?:
-    | T
-    | {
-        page_title?: T;
-        meta_description?: T;
-        social_image?: T;
-      };
-  directusId?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1020,6 +1080,52 @@ export interface ContactInfoItemsSelect<T extends boolean = true> {
   contact_item_3_content?: T;
   contact_item_4_label?: T;
   contact_item_4_content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  customType?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "user-types_select".
+ */
+export interface UserTypesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  permissions?:
+    | T
+    | {
+        managePages?: T;
+        manageProjects?: T;
+        managePublications?: T;
+        manageMedia?: T;
+        manageStudio?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

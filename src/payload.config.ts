@@ -10,6 +10,8 @@ import { UserTypes } from './collections/UserTypes'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { DFPages } from './collections/DFPages'
+import { DFProjects } from './collections/DFProjects'
+import { DFPublications } from './collections/DFPublications'
 import { Projects } from './collections/Projects'
 import { Publications } from './collections/Publications'
 import { Members } from './collections/Members'
@@ -43,7 +45,6 @@ export default buildConfig({
         Logo: '/components/Logo#Logo',
         Icon: '/components/Icon#Icon',
       },
-      afterNavLinks: ['/components/DFNavLinks#DFNavLinks'],
     },
   },
   collections: [
@@ -51,6 +52,8 @@ export default buildConfig({
     Projects,
     Publications,
     DFPages,
+    DFProjects,
+    DFPublications,
     Media,
     Members,
     ContactInfoItems,
