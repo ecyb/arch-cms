@@ -9,9 +9,9 @@ export const DFPages: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'contentSource', 'order', 'updatedAt'],
     group: 'Davud Farzulla Website',
-    description: 'Davud Farzulla website sections (automatically populated).',
+    description: 'Davud Farzulla website sections (add, re-order, edit, or remove sections to control navigation).',
   },
   access: {
     read: () => true,
@@ -87,10 +87,10 @@ export const DFPages: CollectionConfig = {
       type: 'text',
       required: true,
       unique: true,
-      label: 'Route',
+      label: 'Route / Slug',
       admin: {
         position: 'sidebar',
-        readOnly: true,
+        description: 'URL route (e.g. projects/interior/residential, news, or info/davud-farzulla)',
       },
     },
     {
@@ -105,7 +105,16 @@ export const DFPages: CollectionConfig = {
       ],
       admin: {
         position: 'sidebar',
-        readOnly: true,
+      },
+    },
+    {
+      name: 'order',
+      type: 'number',
+      label: 'Sort Order',
+      defaultValue: 0,
+      admin: {
+        position: 'sidebar',
+        description: 'Lower numbers appear first in navigation',
       },
     },
   ],

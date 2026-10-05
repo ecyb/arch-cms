@@ -390,7 +390,7 @@ export interface Publication {
   createdAt: string;
 }
 /**
- * Davud Farzulla website sections (automatically populated).
+ * Davud Farzulla website sections (add, re-order, edit, or remove sections to control navigation).
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "df-pages".
@@ -403,8 +403,15 @@ export interface DfPage {
   typologyFilter?: ('Residential' | 'Hospitality' | 'Offices' | 'All') | null;
   description?: string | null;
   heroImage?: (number | null) | Media;
+  /**
+   * URL route (e.g. projects/interior/residential, news, or info/davud-farzulla)
+   */
   slug: string;
   contentSource?: ('projects' | 'news' | 'info') | null;
+  /**
+   * Lower numbers appear first in navigation
+   */
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -880,6 +887,7 @@ export interface DfPagesSelect<T extends boolean = true> {
   heroImage?: T;
   slug?: T;
   contentSource?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
