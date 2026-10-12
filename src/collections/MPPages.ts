@@ -4,7 +4,7 @@ import { hasPermission } from '../access/roles'
 export const MPPages: CollectionConfig = {
   slug: 'mp-pages',
   labels: {
-    singular: 'Magnum Projects Page',
+    singular: 'Page',
     plural: 'Pages',
   },
   admin: {

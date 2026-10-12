@@ -4,8 +4,8 @@ import { hasPermission } from '../access/roles'
 export const DFPages: CollectionConfig = {
   slug: 'df-pages',
   labels: {
-    singular: 'Davud Farzulla Section',
-    plural: 'Davud Farzulla Sections',
+    singular: 'Page',
+    plural: 'Pages',
   },
   admin: {
     useAsTitle: 'title',
