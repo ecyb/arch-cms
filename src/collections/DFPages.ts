@@ -27,6 +27,14 @@ export const DFPages: CollectionConfig = {
       label: 'Section Title',
     },
     {
+      name: 'navLabel',
+      type: 'text',
+      label: 'Navigation Menu Label',
+      admin: {
+        description: 'Menu text (e.g. "Info" or "News"). If empty, info pages display as "Info" in the menu.',
+      },
+    },
+    {
       name: 'tagline',
       type: 'text',
       label: 'Subtitle / Tagline',
