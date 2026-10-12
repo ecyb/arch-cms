@@ -9,7 +9,7 @@ export const MPPages: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'isVisible', 'updatedAt'],
     group: 'Magnum Projects Website',
     description: 'Magnum Projects website pages and section layouts.',
   },
@@ -35,6 +35,16 @@ export const MPPages: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'e.g. index, home, about-us, projects, services, contact-us',
+      },
+    },
+    {
+      name: 'isVisible',
+      type: 'checkbox',
+      label: 'Show Page (Visible on Website)',
+      defaultValue: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Toggle on to show, or uncheck to hide this page on the website',
       },
     },
     {

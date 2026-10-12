@@ -9,7 +9,7 @@ export const DFPages: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'contentSource', 'order', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'isVisible', 'contentSource', 'order', 'updatedAt'],
     group: 'Davud Farzulla Website',
     description: 'Davud Farzulla website sections (add, re-order, edit, or remove sections to control navigation).',
   },
@@ -91,6 +91,16 @@ export const DFPages: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'URL route (e.g. projects/interior/residential, news, or info/davud-farzulla)',
+      },
+    },
+    {
+      name: 'isVisible',
+      type: 'checkbox',
+      label: 'Show Page (Visible on Website)',
+      defaultValue: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Toggle on to show, or uncheck to hide this section on the website',
       },
     },
     {

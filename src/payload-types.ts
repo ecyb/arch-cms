@@ -149,6 +149,10 @@ export interface Page {
   id: number;
   title: string;
   slug: string;
+  /**
+   * Toggle on to show, or uncheck to hide this page on the website
+   */
+  isVisible?: boolean | null;
   layout: (
     | {
         headline?: string | null;
@@ -413,6 +417,10 @@ export interface DfPage {
    * URL route (e.g. projects/interior/residential, news, or info/davud-farzulla)
    */
   slug: string;
+  /**
+   * Toggle on to show, or uncheck to hide this section on the website
+   */
+  isVisible?: boolean | null;
   contentSource?: ('projects' | 'news' | 'info') | null;
   /**
    * Lower numbers appear first in navigation
@@ -486,6 +494,10 @@ export interface MpPage {
    * e.g. index, home, about-us, projects, services, contact-us
    */
   slug: string;
+  /**
+   * Toggle on to show, or uncheck to hide this page on the website
+   */
+  isVisible?: boolean | null;
   layout?:
     | (
         | {
@@ -861,6 +873,7 @@ export interface PayloadMigration {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  isVisible?: T;
   layout?:
     | T
     | {
@@ -1076,6 +1089,7 @@ export interface DfPagesSelect<T extends boolean = true> {
   description?: T;
   heroImage?: T;
   slug?: T;
+  isVisible?: T;
   contentSource?: T;
   order?: T;
   updatedAt?: T;
@@ -1136,6 +1150,7 @@ export interface DfPublicationsSelect<T extends boolean = true> {
 export interface MpPagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  isVisible?: T;
   layout?:
     | T
     | {

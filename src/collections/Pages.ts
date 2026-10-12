@@ -9,7 +9,7 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'isVisible', 'updatedAt'],
     group: 'Archia Website',
   },
   access: {
@@ -31,6 +31,16 @@ export const Pages: CollectionConfig = {
       unique: true,
       admin: {
         position: 'sidebar',
+      },
+    },
+    {
+      name: 'isVisible',
+      type: 'checkbox',
+      label: 'Show Page (Visible on Website)',
+      defaultValue: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Toggle on to show, or uncheck to hide this page on the website',
       },
     },
     {
