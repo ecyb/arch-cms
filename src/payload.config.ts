@@ -14,6 +14,9 @@ import { DFProjects } from './collections/DFProjects'
 import { DFPublications } from './collections/DFPublications'
 import { Projects } from './collections/Projects'
 import { Publications } from './collections/Publications'
+import { MPPages } from './collections/MPPages'
+import { MPProjects } from './collections/MPProjects'
+import { MPPublications } from './collections/MPPublications'
 import { Members } from './collections/Members'
 import { ContactInfoItems } from './collections/ContactInfoItems'
 
@@ -54,6 +57,9 @@ export default buildConfig({
     DFPages,
     DFProjects,
     DFPublications,
+    MPPages,
+    MPProjects,
+    MPPublications,
     Media,
     Members,
     ContactInfoItems,

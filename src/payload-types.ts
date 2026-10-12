@@ -73,6 +73,9 @@ export interface Config {
     'df-pages': DfPage;
     'df-projects': DfProject;
     'df-publications': DfPublication;
+    'mp-pages': MpPage;
+    'mp-projects': MpProject;
+    'mp-publications': MpPublication;
     media: Media;
     members: Member;
     contact_info_items: ContactInfoItem;
@@ -91,6 +94,9 @@ export interface Config {
     'df-pages': DfPagesSelect<false> | DfPagesSelect<true>;
     'df-projects': DfProjectsSelect<false> | DfProjectsSelect<true>;
     'df-publications': DfPublicationsSelect<false> | DfPublicationsSelect<true>;
+    'mp-pages': MpPagesSelect<false> | MpPagesSelect<true>;
+    'mp-projects': MpProjectsSelect<false> | MpProjectsSelect<true>;
+    'mp-publications': MpPublicationsSelect<false> | MpPublicationsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
     contact_info_items: ContactInfoItemsSelect<false> | ContactInfoItemsSelect<true>;
@@ -468,6 +474,178 @@ export interface DfPublication {
   createdAt: string;
 }
 /**
+ * Magnum Projects website pages and section layouts.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mp-pages".
+ */
+export interface MpPage {
+  id: number;
+  title: string;
+  /**
+   * e.g. index, home, about-us, projects, services, contact-us
+   */
+  slug: string;
+  layout?:
+    | (
+        | {
+            headline?: string | null;
+            tagline?: string | null;
+            slides?:
+              | {
+                  image?: (number | null) | Media;
+                  caption?: string | null;
+                  linkUrl?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mpHeroSlider';
+          }
+        | {
+            tag?: string | null;
+            title?: string | null;
+            description?: string | null;
+            image?: (number | null) | Media;
+            stats?:
+              | {
+                  value?: string | null;
+                  label?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mpAboutSection';
+          }
+        | {
+            tag?: string | null;
+            title?: string | null;
+            services?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  image?: (number | null) | Media;
+                  slug?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mpServicesSection';
+          }
+        | {
+            tag?: string | null;
+            title?: string | null;
+            projects?: (number | MpProject)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mpFeaturedProjects';
+          }
+        | {
+            title?: string | null;
+            subtitle?: string | null;
+            email?: string | null;
+            phone?: string | null;
+            address?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mpContactSection';
+          }
+        | {
+            title?: string | null;
+            body?: string | null;
+            image?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mpContentBlock';
+          }
+      )[]
+    | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Magnum Projects luxury development & construction projects.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mp-projects".
+ */
+export interface MpProject {
+  id: number;
+  name: string;
+  slug: string;
+  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
+  description?: string | null;
+  client?: string | null;
+  location?: string | null;
+  area?: string | null;
+  year?: number | null;
+  category?: string | null;
+  status?: string | null;
+  budget?: string | null;
+  featured_mp?: boolean | null;
+  sort?: number | null;
+  gallery?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    /**
+     * Ideal length 45-60 characters recommended.
+     */
+    page_title?: string | null;
+    /**
+     * Ideal length 130-160 characters recommended.
+     */
+    meta_description?: string | null;
+    social_image?: (number | null) | Media;
+  };
+  directusId?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Magnum Projects development updates, construction news, and regulatory insights.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mp-publications".
+ */
+export interface MpPublication {
+  id: number;
+  name: string;
+  slug: string;
+  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
+  date?: string | null;
+  latest?: boolean | null;
+  /**
+   * Article content / HTML markup
+   */
+  body?: string | null;
+  coverImage?: (number | null) | Media;
+  seo?: {
+    /**
+     * Ideal length 45-60 characters recommended.
+     */
+    page_title?: string | null;
+    /**
+     * Ideal length 130-160 characters recommended.
+     */
+    meta_description?: string | null;
+    social_image?: (number | null) | Media;
+  };
+  directusId?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
@@ -601,6 +779,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'df-publications';
         value: number | DfPublication;
+      } | null)
+    | ({
+        relationTo: 'mp-pages';
+        value: number | MpPage;
+      } | null)
+    | ({
+        relationTo: 'mp-projects';
+        value: number | MpProject;
+      } | null)
+    | ({
+        relationTo: 'mp-publications';
+        value: number | MpPublication;
       } | null)
     | ({
         relationTo: 'media';
@@ -936,6 +1126,163 @@ export interface DfPublicationsSelect<T extends boolean = true> {
   subtitle?: T;
   body?: T;
   coverImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mp-pages_select".
+ */
+export interface MpPagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  layout?:
+    | T
+    | {
+        mpHeroSlider?:
+          | T
+          | {
+              headline?: T;
+              tagline?: T;
+              slides?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    linkUrl?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        mpAboutSection?:
+          | T
+          | {
+              tag?: T;
+              title?: T;
+              description?: T;
+              image?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        mpServicesSection?:
+          | T
+          | {
+              tag?: T;
+              title?: T;
+              services?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    image?: T;
+                    slug?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        mpFeaturedProjects?:
+          | T
+          | {
+              tag?: T;
+              title?: T;
+              projects?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mpContactSection?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              email?: T;
+              phone?: T;
+              address?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mpContentBlock?:
+          | T
+          | {
+              title?: T;
+              body?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mp-projects_select".
+ */
+export interface MpProjectsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  website?: T;
+  description?: T;
+  client?: T;
+  location?: T;
+  area?: T;
+  year?: T;
+  category?: T;
+  status?: T;
+  budget?: T;
+  featured_mp?: T;
+  sort?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        page_title?: T;
+        meta_description?: T;
+        social_image?: T;
+      };
+  directusId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mp-publications_select".
+ */
+export interface MpPublicationsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  website?: T;
+  date?: T;
+  latest?: T;
+  body?: T;
+  coverImage?: T;
+  seo?:
+    | T
+    | {
+        page_title?: T;
+        meta_description?: T;
+        social_image?: T;
+      };
+  directusId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
