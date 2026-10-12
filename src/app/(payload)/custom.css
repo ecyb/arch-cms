@@ -250,3 +250,56 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(140, 140, 140, 0.55);
 }
+
+/* ==========================================================================
+   Login button loading state: spinner + "Signing in…" while the form submits
+   (Payload disables the button while processing)
+   ========================================================================== */
+.login__form .form-submit button[disabled] {
+  position: relative;
+  opacity: 1 !important;
+  cursor: progress !important;
+  background: #d9d9d9 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.login__form .form-submit button[disabled] .btn__label,
+.login__form .form-submit button[disabled] .btn__content {
+  visibility: hidden;
+}
+
+.login__form .form-submit button[disabled]::after {
+  content: 'Signing in…';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 26px;
+  color: #0b0b0d;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.login__form .form-submit button[disabled]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 76px);
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  border: 2px solid rgba(11, 11, 13, 0.25);
+  border-top-color: #0b0b0d;
+  border-radius: 50%;
+  animation: archia-login-spin 0.7s linear infinite;
+  z-index: 1;
+}
+
+@keyframes archia-login-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

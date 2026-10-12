@@ -50,15 +50,15 @@ export const Users: CollectionConfig = {
       required: true,
       options: [
         {
-          label: '👑 Administrator (Full Access to CMS & User Management)',
+          label: 'Administrator (Full Access to CMS & User Management)',
           value: 'admin',
         },
         {
-          label: '✍️ Moderator (Content & Publishing Management)',
+          label: 'Moderator (Content & Publishing Management)',
           value: 'moderator',
         },
         {
-          label: '⚙️ Custom User Type (Granular Permissions)',
+          label: 'Custom User Type (Granular Permissions)',
           value: 'custom',
         },
       ],
