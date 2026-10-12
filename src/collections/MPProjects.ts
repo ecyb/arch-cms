@@ -115,22 +115,9 @@ export const MPProjects: CollectionConfig = {
               ],
             },
             {
-              type: 'row',
-              fields: [
-                {
-                  name: 'featured_mp',
-                  type: 'checkbox',
-                  label: 'Featured on Magnum Projects',
-                  defaultValue: true,
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'sort',
-                  type: 'number',
-                  label: 'Sort Order',
-                  admin: { width: '50%' },
-                },
-              ],
+              name: 'sort',
+              type: 'number',
+              label: 'Sort Order',
             },
             {
               name: 'gallery',
@@ -182,6 +169,16 @@ export const MPProjects: CollectionConfig = {
           ],
         },
       ],
+    },
+    {
+      name: 'featured_mp',
+      type: 'checkbox',
+      label: 'Featured on Magnum Projects',
+      defaultValue: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Show / feature this project on Magnum Projects',
+      },
     },
     {
       name: 'directusId',
