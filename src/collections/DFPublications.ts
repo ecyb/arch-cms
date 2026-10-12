@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { hasPermission } from '../access/roles'
+import { withSeoTab } from '../fields/seo'
+import { websitesField } from '../fields/websites'
+import { richBodyFields, syncBodyHtml } from '../fields/richBody'
 
 export const DFPublications: CollectionConfig = {
   slug: 'df-publications',
@@ -9,7 +12,7 @@ export const DFPublications: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'slug', 'website', 'date', 'latest'],
+    defaultColumns: ['name', 'slug', 'websites', 'date', 'latest'],
     group: 'Davud Farzulla Website',
     description: 'Davud Farzulla news, press features, and monograph publications.',
   },
@@ -19,7 +22,8 @@ export const DFPublications: CollectionConfig = {
     update: hasPermission('managePublications'),
     delete: hasPermission('managePublications'),
   },
-  fields: [
+  hooks: { beforeChange: [syncBodyHtml] },
+  fields: withSeoTab([
     {
       type: 'tabs',
       tabs: [
@@ -39,19 +43,7 @@ export const DFPublications: CollectionConfig = {
               unique: true,
               label: 'Slug',
             },
-            {
-              name: 'website',
-              type: 'select',
-              label: 'Website Destination',
-              defaultValue: 'DF',
-              options: [
-                { label: 'None', value: 'None' },
-                { label: 'Archia', value: 'Archia' },
-                { label: 'Magnum Projects', value: 'Magnum Projects' },
-                { label: 'DF (Davud Farzulla)', value: 'DF' },
-                { label: 'All Websites', value: 'All' },
-              ],
-            },
+            websitesField('DF'),
             {
               name: 'date',
               type: 'date',
@@ -68,11 +60,7 @@ export const DFPublications: CollectionConfig = {
               type: 'text',
               label: 'Subtitle / Excerpt',
             },
-            {
-              name: 'body',
-              type: 'textarea',
-              label: 'Body / Content',
-            },
+            ...richBodyFields(),
             {
               name: 'coverImage',
               type: 'upload',
@@ -83,5 +71,5 @@ export const DFPublications: CollectionConfig = {
         },
       ],
     },
-  ],
+  ]),
 }

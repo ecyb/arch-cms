@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { hasPermission } from '../access/roles'
+import { withSeoTab } from '../fields/seo'
+import { websitesField } from '../fields/websites'
+import { richBodyFields, syncBodyHtml } from '../fields/richBody'
 
 export const Publications: CollectionConfig = {
   slug: 'publications',
@@ -14,7 +17,8 @@ export const Publications: CollectionConfig = {
     update: hasPermission('managePublications'),
     delete: hasPermission('managePublications'),
   },
-  fields: [
+  hooks: { beforeChange: [syncBodyHtml] },
+  fields: withSeoTab([
     {
       type: 'tabs',
       tabs: [
@@ -34,19 +38,7 @@ export const Publications: CollectionConfig = {
               unique: true,
               label: 'Slug',
             },
-            {
-              name: 'website',
-              type: 'select',
-              label: 'Website Destination',
-              defaultValue: 'Archia',
-              options: [
-                { label: 'None', value: 'None' },
-                { label: 'Archia', value: 'Archia' },
-                { label: 'Magnum Projects', value: 'Magnum Projects' },
-                { label: 'DF (Davud Farzulla)', value: 'DF' },
-                { label: 'All Websites', value: 'All' },
-              ],
-            },
+            websitesField('Archia'),
             {
               name: 'date',
               type: 'date',
@@ -58,14 +50,7 @@ export const Publications: CollectionConfig = {
               label: 'Latest Article',
               defaultValue: false,
             },
-            {
-              name: 'body',
-              type: 'textarea',
-              label: 'Body',
-              admin: {
-                description: 'Article content / HTML markup',
-              },
-            },
+            ...richBodyFields(),
             {
               name: 'coverImage',
               type: 'upload',
@@ -118,5 +103,5 @@ export const Publications: CollectionConfig = {
         readOnly: true,
       },
     },
-  ],
+  ]),
 }

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { hasPermission } from '../access/roles'
+import { withSeoTab } from '../fields/seo'
 
 export const DFPages: CollectionConfig = {
   slug: 'df-pages',
@@ -19,7 +20,7 @@ export const DFPages: CollectionConfig = {
     update: hasPermission('managePages'),
     delete: hasPermission('managePages'),
   },
-  fields: [
+  fields: withSeoTab([
     {
       name: 'title',
       type: 'text',
@@ -135,5 +136,5 @@ export const DFPages: CollectionConfig = {
         description: 'Lower numbers appear first in navigation',
       },
     },
-  ],
+  ]),
 }

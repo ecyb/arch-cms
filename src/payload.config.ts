@@ -1,5 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { editor } from './fields/editor'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -84,7 +84,7 @@ export default buildConfig({
     'https://www.magnum-projects.com',
     'https://magnum-projects.com',
   ],
-  editor: lexicalEditor(),
+  editor,
   secret: process.env.PAYLOAD_SECRET || 'archia-payload-secret-key-987654321',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -93,7 +93,8 @@ export default buildConfig({
     pool: {
       connectionString: dbUri,
       max: 10,
-      idleTimeoutMillis: 30000,
+      idleTimeoutMillis: 600000, // keep connections warm; reconnecting to Railway costs ~1s
+      keepAlive: true,
       connectionTimeoutMillis: 5000,
     },
     push: false,

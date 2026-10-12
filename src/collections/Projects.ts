@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { hasPermission } from '../access/roles'
+import { withSeoTab } from '../fields/seo'
+import { websitesField } from '../fields/websites'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -14,7 +16,7 @@ export const Projects: CollectionConfig = {
     update: hasPermission('manageProjects'),
     delete: hasPermission('manageProjects'),
   },
-  fields: [
+  fields: withSeoTab([
     {
       type: 'tabs',
       tabs: [
@@ -34,19 +36,7 @@ export const Projects: CollectionConfig = {
               unique: true,
               label: 'Slug',
             },
-            {
-              name: 'website',
-              type: 'select',
-              label: 'Website Destination',
-              defaultValue: 'Archia',
-              options: [
-                { label: 'None', value: 'None' },
-                { label: 'Archia', value: 'Archia' },
-                { label: 'Magnum Projects', value: 'Magnum Projects' },
-                { label: 'DF (Davud Farzulla)', value: 'DF' },
-                { label: 'All Websites', value: 'All' },
-              ],
-            },
+            websitesField('Archia'),
             {
               name: 'description',
               type: 'textarea',
@@ -193,5 +183,5 @@ export const Projects: CollectionConfig = {
         readOnly: true,
       },
     },
-  ],
+  ]),
 }

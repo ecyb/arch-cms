@@ -33,3 +33,6 @@ payload.db*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local backups
+/backups

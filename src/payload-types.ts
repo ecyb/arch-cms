@@ -148,11 +148,6 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  slug: string;
-  /**
-   * Toggle on to show, or uncheck to hide this page on the website
-   */
-  isVisible?: boolean | null;
   layout: (
     | {
         headline?: string | null;
@@ -305,6 +300,30 @@ export interface Page {
         blockType: 'contentBlock';
       }
   )[];
+  seo?: {
+    /**
+     * Shown as the clickable headline in search results. Ideal length 45-60 characters. Leave empty to fall back to the entry title.
+     */
+    page_title?: string | null;
+    /**
+     * Search result snippet. Ideal length 130-160 characters. Leave empty to fall back to the entry description.
+     */
+    meta_description?: string | null;
+    /**
+     * Recommended 1200 x 630 px. Leave empty to fall back to the cover / first image.
+     */
+    social_image?: (number | null) | Media;
+    /**
+     * Only set if this content is duplicated elsewhere. Must be a full URL (https://...).
+     */
+    canonical_url?: string | null;
+    no_index?: boolean | null;
+  };
+  slug: string;
+  /**
+   * Toggle on to show, or uncheck to hide this page on the website
+   */
+  isVisible?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -316,7 +335,6 @@ export interface Project {
   id: number;
   name: string;
   slug: string;
-  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   description?: string | null;
   client?: string | null;
   location?: string | null;
@@ -336,16 +354,28 @@ export interface Project {
     | null;
   seo?: {
     /**
-     * Ideal length 45-60 characters recommended.
+     * Shown as the clickable headline in search results. Ideal length 45-60 characters. Leave empty to fall back to the entry title.
      */
     page_title?: string | null;
     /**
-     * Ideal length 130-160 characters recommended.
+     * Search result snippet. Ideal length 130-160 characters. Leave empty to fall back to the entry description.
      */
     meta_description?: string | null;
+    /**
+     * Recommended 1200 x 630 px. Leave empty to fall back to the cover / first image.
+     */
     social_image?: (number | null) | Media;
+    /**
+     * Only set if this content is duplicated elsewhere. Must be a full URL (https://...).
+     */
+    canonical_url?: string | null;
+    no_index?: boolean | null;
   };
   directusId?: number | null;
+  /**
+   * Pick one or more websites this entry appears on. Leave empty to hide it everywhere.
+   */
+  websites?: ('Archia' | 'Magnum Projects' | 'DF')[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -376,26 +406,52 @@ export interface Publication {
   id: number;
   name: string;
   slug: string;
-  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   date?: string | null;
   latest?: boolean | null;
   /**
-   * Article content / HTML markup
+   * Write the article here. Headings, bold, lists, links and images are supported.
    */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   body?: string | null;
   coverImage?: (number | null) | Media;
   seo?: {
     /**
-     * Ideal length 45-60 characters recommended.
+     * Shown as the clickable headline in search results. Ideal length 45-60 characters. Leave empty to fall back to the entry title.
      */
     page_title?: string | null;
     /**
-     * Ideal length 130-160 characters recommended.
+     * Search result snippet. Ideal length 130-160 characters. Leave empty to fall back to the entry description.
      */
     meta_description?: string | null;
+    /**
+     * Recommended 1200 x 630 px. Leave empty to fall back to the cover / first image.
+     */
     social_image?: (number | null) | Media;
+    /**
+     * Only set if this content is duplicated elsewhere. Must be a full URL (https://...).
+     */
+    canonical_url?: string | null;
+    no_index?: boolean | null;
   };
   directusId?: number | null;
+  /**
+   * Pick one or more websites this entry appears on. Leave empty to hide it everywhere.
+   */
+  websites?: ('Archia' | 'Magnum Projects' | 'DF')[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -408,11 +464,34 @@ export interface Publication {
 export interface DfPage {
   id: number;
   title: string;
+  /**
+   * Menu text (e.g. "Info" or "News"). If empty, info pages display as "Info" in the menu.
+   */
+  navLabel?: string | null;
   tagline?: string | null;
   categoryFilter?: ('Interior' | 'Architecture' | 'All') | null;
   typologyFilter?: ('Residential' | 'Hospitality' | 'Offices' | 'All') | null;
   description?: string | null;
   heroImage?: (number | null) | Media;
+  seo?: {
+    /**
+     * Shown as the clickable headline in search results. Ideal length 45-60 characters. Leave empty to fall back to the entry title.
+     */
+    page_title?: string | null;
+    /**
+     * Search result snippet. Ideal length 130-160 characters. Leave empty to fall back to the entry description.
+     */
+    meta_description?: string | null;
+    /**
+     * Recommended 1200 x 630 px. Leave empty to fall back to the cover / first image.
+     */
+    social_image?: (number | null) | Media;
+    /**
+     * Only set if this content is duplicated elsewhere. Must be a full URL (https://...).
+     */
+    canonical_url?: string | null;
+    no_index?: boolean | null;
+  };
   /**
    * URL route (e.g. projects/interior/residential, news, or info/davud-farzulla)
    */
@@ -439,7 +518,6 @@ export interface DfProject {
   id: number;
   name: string;
   slug: string;
-  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   description?: string | null;
   client?: string | null;
   location?: string | null;
@@ -456,9 +534,28 @@ export interface DfProject {
       }[]
     | null;
   seo?: {
+    /**
+     * Shown as the clickable headline in search results. Ideal length 45-60 characters. Leave empty to fall back to the entry title.
+     */
     title?: string | null;
+    /**
+     * Search result snippet. Ideal length 130-160 characters. Leave empty to fall back to the entry description.
+     */
     description?: string | null;
+    /**
+     * Recommended 1200 x 630 px. Leave empty to fall back to the cover / first image.
+     */
+    social_image?: (number | null) | Media;
+    /**
+     * Only set if this content is duplicated elsewhere. Must be a full URL (https://...).
+     */
+    canonical_url?: string | null;
+    no_index?: boolean | null;
   };
+  /**
+   * Pick one or more websites this entry appears on. Leave empty to hide it everywhere.
+   */
+  websites?: ('Archia' | 'Magnum Projects' | 'DF')[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -472,12 +569,52 @@ export interface DfPublication {
   id: number;
   name: string;
   slug: string;
-  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   date?: string | null;
   latest?: boolean | null;
   subtitle?: string | null;
+  /**
+   * Write the article here. Headings, bold, lists, links and images are supported.
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   body?: string | null;
   coverImage?: (number | null) | Media;
+  seo?: {
+    /**
+     * Shown as the clickable headline in search results. Ideal length 45-60 characters. Leave empty to fall back to the entry title.
+     */
+    page_title?: string | null;
+    /**
+     * Search result snippet. Ideal length 130-160 characters. Leave empty to fall back to the entry description.
+     */
+    meta_description?: string | null;
+    /**
+     * Recommended 1200 x 630 px. Leave empty to fall back to the cover / first image.
+     */
+    social_image?: (number | null) | Media;
+    /**
+     * Only set if this content is duplicated elsewhere. Must be a full URL (https://...).
+     */
+    canonical_url?: string | null;
+    no_index?: boolean | null;
+  };
+  /**
+   * Pick one or more websites this entry appears on. Leave empty to hide it everywhere.
+   */
+  websites?: ('Archia' | 'Magnum Projects' | 'DF')[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -490,14 +627,6 @@ export interface DfPublication {
 export interface MpPage {
   id: number;
   title: string;
-  /**
-   * e.g. index, home, about-us, projects, services, contact-us
-   */
-  slug: string;
-  /**
-   * Toggle on to show, or uncheck to hide this page on the website
-   */
-  isVisible?: boolean | null;
   layout?:
     | (
         | {
@@ -576,9 +705,32 @@ export interface MpPage {
       )[]
     | null;
   meta?: {
+    /**
+     * Shown as the clickable headline in search results. Ideal length 45-60 characters. Leave empty to fall back to the entry title.
+     */
     title?: string | null;
+    /**
+     * Search result snippet. Ideal length 130-160 characters. Leave empty to fall back to the entry description.
+     */
     description?: string | null;
+    /**
+     * Recommended 1200 x 630 px. Leave empty to fall back to the cover / first image.
+     */
+    social_image?: (number | null) | Media;
+    /**
+     * Only set if this content is duplicated elsewhere. Must be a full URL (https://...).
+     */
+    canonical_url?: string | null;
+    no_index?: boolean | null;
   };
+  /**
+   * e.g. index, home, about-us, projects, services, contact-us
+   */
+  slug: string;
+  /**
+   * Toggle on to show, or uncheck to hide this page on the website
+   */
+  isVisible?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -592,7 +744,6 @@ export interface MpProject {
   id: number;
   name: string;
   slug: string;
-  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   description?: string | null;
   client?: string | null;
   location?: string | null;
@@ -601,7 +752,6 @@ export interface MpProject {
   category?: string | null;
   status?: string | null;
   budget?: string | null;
-  featured_mp?: boolean | null;
   sort?: number | null;
   gallery?:
     | {
@@ -611,16 +761,32 @@ export interface MpProject {
     | null;
   seo?: {
     /**
-     * Ideal length 45-60 characters recommended.
+     * Shown as the clickable headline in search results. Ideal length 45-60 characters. Leave empty to fall back to the entry title.
      */
     page_title?: string | null;
     /**
-     * Ideal length 130-160 characters recommended.
+     * Search result snippet. Ideal length 130-160 characters. Leave empty to fall back to the entry description.
      */
     meta_description?: string | null;
+    /**
+     * Recommended 1200 x 630 px. Leave empty to fall back to the cover / first image.
+     */
     social_image?: (number | null) | Media;
+    /**
+     * Only set if this content is duplicated elsewhere. Must be a full URL (https://...).
+     */
+    canonical_url?: string | null;
+    no_index?: boolean | null;
   };
+  /**
+   * Show / feature this project on Magnum Projects
+   */
+  featured_mp?: boolean | null;
   directusId?: number | null;
+  /**
+   * Pick one or more websites this entry appears on. Leave empty to hide it everywhere.
+   */
+  websites?: ('Archia' | 'Magnum Projects' | 'DF')[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -634,26 +800,52 @@ export interface MpPublication {
   id: number;
   name: string;
   slug: string;
-  website?: ('None' | 'Archia' | 'Magnum Projects' | 'DF' | 'All') | null;
   date?: string | null;
   latest?: boolean | null;
   /**
-   * Article content / HTML markup
+   * Write the article here. Headings, bold, lists, links and images are supported.
    */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   body?: string | null;
   coverImage?: (number | null) | Media;
   seo?: {
     /**
-     * Ideal length 45-60 characters recommended.
+     * Shown as the clickable headline in search results. Ideal length 45-60 characters. Leave empty to fall back to the entry title.
      */
     page_title?: string | null;
     /**
-     * Ideal length 130-160 characters recommended.
+     * Search result snippet. Ideal length 130-160 characters. Leave empty to fall back to the entry description.
      */
     meta_description?: string | null;
+    /**
+     * Recommended 1200 x 630 px. Leave empty to fall back to the cover / first image.
+     */
     social_image?: (number | null) | Media;
+    /**
+     * Only set if this content is duplicated elsewhere. Must be a full URL (https://...).
+     */
+    canonical_url?: string | null;
+    no_index?: boolean | null;
   };
   directusId?: number | null;
+  /**
+   * Pick one or more websites this entry appears on. Leave empty to hide it everywhere.
+   */
+  websites?: ('Archia' | 'Magnum Projects' | 'DF')[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -872,8 +1064,6 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
-  isVisible?: T;
   layout?:
     | T
     | {
@@ -1015,6 +1205,17 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  seo?:
+    | T
+    | {
+        page_title?: T;
+        meta_description?: T;
+        social_image?: T;
+        canonical_url?: T;
+        no_index?: T;
+      };
+  slug?: T;
+  isVisible?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1025,7 +1226,6 @@ export interface PagesSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  website?: T;
   description?: T;
   client?: T;
   location?: T;
@@ -1049,8 +1249,11 @@ export interface ProjectsSelect<T extends boolean = true> {
         page_title?: T;
         meta_description?: T;
         social_image?: T;
+        canonical_url?: T;
+        no_index?: T;
       };
   directusId?: T;
+  websites?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1061,9 +1264,9 @@ export interface ProjectsSelect<T extends boolean = true> {
 export interface PublicationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  website?: T;
   date?: T;
   latest?: T;
+  content?: T;
   body?: T;
   coverImage?: T;
   seo?:
@@ -1072,8 +1275,11 @@ export interface PublicationsSelect<T extends boolean = true> {
         page_title?: T;
         meta_description?: T;
         social_image?: T;
+        canonical_url?: T;
+        no_index?: T;
       };
   directusId?: T;
+  websites?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1083,11 +1289,21 @@ export interface PublicationsSelect<T extends boolean = true> {
  */
 export interface DfPagesSelect<T extends boolean = true> {
   title?: T;
+  navLabel?: T;
   tagline?: T;
   categoryFilter?: T;
   typologyFilter?: T;
   description?: T;
   heroImage?: T;
+  seo?:
+    | T
+    | {
+        page_title?: T;
+        meta_description?: T;
+        social_image?: T;
+        canonical_url?: T;
+        no_index?: T;
+      };
   slug?: T;
   isVisible?: T;
   contentSource?: T;
@@ -1102,7 +1318,6 @@ export interface DfPagesSelect<T extends boolean = true> {
 export interface DfProjectsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  website?: T;
   description?: T;
   client?: T;
   location?: T;
@@ -1123,7 +1338,11 @@ export interface DfProjectsSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        social_image?: T;
+        canonical_url?: T;
+        no_index?: T;
       };
+  websites?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1134,12 +1353,22 @@ export interface DfProjectsSelect<T extends boolean = true> {
 export interface DfPublicationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  website?: T;
   date?: T;
   latest?: T;
   subtitle?: T;
+  content?: T;
   body?: T;
   coverImage?: T;
+  seo?:
+    | T
+    | {
+        page_title?: T;
+        meta_description?: T;
+        social_image?: T;
+        canonical_url?: T;
+        no_index?: T;
+      };
+  websites?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1149,8 +1378,6 @@ export interface DfPublicationsSelect<T extends boolean = true> {
  */
 export interface MpPagesSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
-  isVisible?: T;
   layout?:
     | T
     | {
@@ -1239,7 +1466,12 @@ export interface MpPagesSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        social_image?: T;
+        canonical_url?: T;
+        no_index?: T;
       };
+  slug?: T;
+  isVisible?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1250,7 +1482,6 @@ export interface MpPagesSelect<T extends boolean = true> {
 export interface MpProjectsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  website?: T;
   description?: T;
   client?: T;
   location?: T;
@@ -1259,7 +1490,6 @@ export interface MpProjectsSelect<T extends boolean = true> {
   category?: T;
   status?: T;
   budget?: T;
-  featured_mp?: T;
   sort?: T;
   gallery?:
     | T
@@ -1273,8 +1503,12 @@ export interface MpProjectsSelect<T extends boolean = true> {
         page_title?: T;
         meta_description?: T;
         social_image?: T;
+        canonical_url?: T;
+        no_index?: T;
       };
+  featured_mp?: T;
   directusId?: T;
+  websites?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1285,9 +1519,9 @@ export interface MpProjectsSelect<T extends boolean = true> {
 export interface MpPublicationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  website?: T;
   date?: T;
   latest?: T;
+  content?: T;
   body?: T;
   coverImage?: T;
   seo?:
@@ -1296,8 +1530,11 @@ export interface MpPublicationsSelect<T extends boolean = true> {
         page_title?: T;
         meta_description?: T;
         social_image?: T;
+        canonical_url?: T;
+        no_index?: T;
       };
   directusId?: T;
+  websites?: T;
   updatedAt?: T;
   createdAt?: T;
 }

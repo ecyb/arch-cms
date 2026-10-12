@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { hasPermission } from '../access/roles'
+import { withSeoTab } from '../fields/seo'
+import { websitesField } from '../fields/websites'
+import { richBodyFields, syncBodyHtml } from '../fields/richBody'
 
 export const MPPublications: CollectionConfig = {
   slug: 'mp-publications',
@@ -19,7 +22,8 @@ export const MPPublications: CollectionConfig = {
     update: hasPermission('managePublications'),
     delete: hasPermission('managePublications'),
   },
-  fields: [
+  hooks: { beforeChange: [syncBodyHtml] },
+  fields: withSeoTab([
     {
       type: 'tabs',
       tabs: [
@@ -39,19 +43,7 @@ export const MPPublications: CollectionConfig = {
               unique: true,
               label: 'Slug',
             },
-            {
-              name: 'website',
-              type: 'select',
-              label: 'Website Destination',
-              defaultValue: 'Magnum Projects',
-              options: [
-                { label: 'None', value: 'None' },
-                { label: 'Archia', value: 'Archia' },
-                { label: 'Magnum Projects', value: 'Magnum Projects' },
-                { label: 'DF (Davud Farzulla)', value: 'DF' },
-                { label: 'All Websites', value: 'All' },
-              ],
-            },
+            websitesField('Magnum Projects'),
             {
               name: 'date',
               type: 'date',
@@ -63,14 +55,7 @@ export const MPPublications: CollectionConfig = {
               label: 'Featured / Latest Article',
               defaultValue: false,
             },
-            {
-              name: 'body',
-              type: 'textarea',
-              label: 'Body',
-              admin: {
-                description: 'Article content / HTML markup',
-              },
-            },
+            ...richBodyFields(),
             {
               name: 'coverImage',
               type: 'upload',
@@ -123,5 +108,5 @@ export const MPPublications: CollectionConfig = {
         readOnly: true,
       },
     },
-  ],
+  ]),
 }

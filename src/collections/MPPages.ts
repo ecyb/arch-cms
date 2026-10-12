@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { hasPermission } from '../access/roles'
+import { withSeoTab } from '../fields/seo'
 
 export const MPPages: CollectionConfig = {
   slug: 'mp-pages',
@@ -19,7 +20,7 @@ export const MPPages: CollectionConfig = {
     update: hasPermission('managePages'),
     delete: hasPermission('managePages'),
   },
-  fields: [
+  fields: withSeoTab([
     {
       name: 'title',
       type: 'text',
@@ -285,9 +286,6 @@ export const MPPages: CollectionConfig = {
       name: 'meta',
       type: 'group',
       label: 'SEO / Meta Information',
-      admin: {
-        position: 'sidebar',
-      },
       fields: [
         {
           name: 'title',
@@ -301,5 +299,5 @@ export const MPPages: CollectionConfig = {
         },
       ],
     },
-  ],
+  ], { groupName: 'meta', titleName: 'title', descriptionName: 'description' }),
 }

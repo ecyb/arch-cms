@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { hasPermission } from '../access/roles'
+import { withSeoTab } from '../fields/seo'
+import { websitesField } from '../fields/websites'
 
 export const MPProjects: CollectionConfig = {
   slug: 'mp-projects',
@@ -19,7 +21,7 @@ export const MPProjects: CollectionConfig = {
     update: hasPermission('manageProjects'),
     delete: hasPermission('manageProjects'),
   },
-  fields: [
+  fields: withSeoTab([
     {
       type: 'tabs',
       tabs: [
@@ -39,19 +41,7 @@ export const MPProjects: CollectionConfig = {
               unique: true,
               label: 'Slug',
             },
-            {
-              name: 'website',
-              type: 'select',
-              label: 'Website Destination',
-              defaultValue: 'Magnum Projects',
-              options: [
-                { label: 'None', value: 'None' },
-                { label: 'Archia', value: 'Archia' },
-                { label: 'Magnum Projects', value: 'Magnum Projects' },
-                { label: 'DF (Davud Farzulla)', value: 'DF' },
-                { label: 'All Websites', value: 'All' },
-              ],
-            },
+            websitesField('Magnum Projects'),
             {
               name: 'description',
               type: 'textarea',
@@ -188,5 +178,5 @@ export const MPProjects: CollectionConfig = {
         readOnly: true,
       },
     },
-  ],
+  ]),
 }

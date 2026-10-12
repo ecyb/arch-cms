@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { hasPermission } from '../access/roles'
+import { withSeoTab } from '../fields/seo'
+import { websitesField } from '../fields/websites'
 
 export const DFProjects: CollectionConfig = {
   slug: 'df-projects',
@@ -9,7 +11,7 @@ export const DFProjects: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'slug', 'category', 'typology', 'website', 'year'],
+    defaultColumns: ['name', 'slug', 'category', 'typology', 'websites', 'year'],
     group: 'Davud Farzulla Website',
     description: 'Davud Farzulla architecture & interior design projects.',
   },
@@ -19,7 +21,7 @@ export const DFProjects: CollectionConfig = {
     update: hasPermission('manageProjects'),
     delete: hasPermission('manageProjects'),
   },
-  fields: [
+  fields: withSeoTab([
     {
       type: 'tabs',
       tabs: [
@@ -39,19 +41,7 @@ export const DFProjects: CollectionConfig = {
               unique: true,
               label: 'Slug',
             },
-            {
-              name: 'website',
-              type: 'select',
-              label: 'Website Destination',
-              defaultValue: 'DF',
-              options: [
-                { label: 'None', value: 'None' },
-                { label: 'Archia', value: 'Archia' },
-                { label: 'Magnum Projects', value: 'Magnum Projects' },
-                { label: 'DF (Davud Farzulla)', value: 'DF' },
-                { label: 'All Websites', value: 'All' },
-              ],
-            },
+            websitesField('DF'),
             {
               name: 'description',
               type: 'textarea',
@@ -171,5 +161,5 @@ export const DFProjects: CollectionConfig = {
         },
       ],
     },
-  ],
+  ], { titleName: 'title', descriptionName: 'description' }),
 }
